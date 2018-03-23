@@ -23,7 +23,7 @@ function setup() {
   recorder.setInput(mic);
 
   // create an empty sound file that we will use to playback the recording
-  soundFile = new p5.SoundFile('mySound.wav');
+  soundFile = new p5.SoundFile();
 
   var len = gommettesVolume.length;
   for (i = 0; i < len; i++) {
@@ -52,7 +52,6 @@ function draw() {
     trueRecord = false;
     recorder.stop(); 
     saveSound(soundFile); // save file
-    
   }
 
   if(record == 1 && mic.enabled){

@@ -6,3 +6,53 @@
   bottom: 0;
 }
 
+.button {
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+  /* Light Blue */
+  padding: 16px;
+  border-radius: 8px;
+  -webkit-transition-duration: 0.4s;
+  /* Safari */
+  transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: #008CBA;
+  /* Light Blue */
+  color: white;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.startStopGroup {
+  position: fixed;
+  top: 70%;
+  left: 2%;
+  right: 0;
+  bottom: 0;
+}
+
+.colorGroup {
+  float: left;
+  
+  position: fixed;
+  top: 80%;
+  left: 2%;
+  right: 0;
+  bottom: 0;
+}
+
+.symbolGroup {
+  float: left;
+    
+  position: fixed;
+  top: 90%;
+  left: 2%;
+  right: 0;
+  bottom: 0;
+}
