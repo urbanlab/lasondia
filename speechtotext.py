@@ -19,7 +19,7 @@ def speechtotext(file_path,file):
         file_path,
         file)
 
-    #If the sound is in stereo transfor it in mono
+    #If the sound is in stereo transform it in mono
     audiodata = wave.open(file_name)
     nchannels = audiodata.getnchannels()
     if nchannels > 1:
@@ -45,5 +45,5 @@ def speechtotext(file_path,file):
     # Detects speech in the audio file
     response = client.recognize(config, audio)
     for result in response.results:
-        return('Transcript: {}'.format(result.alternatives[0].transcript))
+        return('{}'.format(result.alternatives[0].transcript))
 

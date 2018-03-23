@@ -24,7 +24,7 @@ def cutter(file_name,length):
 		os.chdir('/home/anthony/Sources/lasondia/'+file_name[:-4]+'_files/')
 		newAudio.export(file_name[:-4] + '-{0}.wav'.format(i+1), format="wav") #Exports to a wav file in the current path
 
-cutter('a2002011001-e02.wav',20)
+
 
 
 
