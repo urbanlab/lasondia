@@ -1,7 +1,8 @@
 # lasondia
 ## Sound Analysis for Music Teachers
 
-Made for IA Workshop (2018 - Lyon , France) organized by : @urbanlab *+* DSAA Villefontaine
+Made for IA Workshop (2018 - Lyon , France) organized by : @urbanlab (https://github.com/urbanlab) *+* DSAA Villefontaine
+
 https://trello.com/b/G2sJqr9v/workshop-dsaa-iapublic
 
 Inspired by lesondier (http://www.lesondier.com/) and its sondbox
