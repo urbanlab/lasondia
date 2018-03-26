@@ -78,10 +78,22 @@ app.get('/analysis', function(req, res) {
   res.sendFile(__dirname + '/src/analysis.html');
 });
 
+app.get('/home', function(req, res) {
+    res.sendfile(__dirname + '/src/home.html');
+});
+
+app.get('/progress', function(req, res) {
+    res.sendfile(__dirname + '/src/progress.html');
+});
+
 app.get('/*', function(req, res) {
   res.sendFile(__dirname + '/src/error404.html');
 });
 
+<<<<<<< HEAD
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
+=======
+app.listen(8000);
+>>>>>>> 862434092a658eb70c5de61d85d3bbf30993d50a
