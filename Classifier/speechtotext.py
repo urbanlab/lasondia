@@ -75,12 +75,14 @@ for i in range(len(output)):
         data.append({
        'music' : True,
        'time' : str(datetime.timedelta(seconds=i*3)),
+       'end_time' : str(datetime.timedelta(seconds=(i+1)*3)),
        'text' : None
         })
     else:
         data.append({
        'music' : False,
        'time' : str(datetime.timedelta(seconds=i*3)),
+       'end_time' : str(datetime.timedelta(seconds=(i+1)*3)),
        'text' : output[i][1]
         })
 json_name = output[0][0][:-9] + '_voices.json'
