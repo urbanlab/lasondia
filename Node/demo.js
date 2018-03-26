@@ -16,8 +16,16 @@ app.get('/analysis', function(req, res) {
     res.sendfile(__dirname + '/src/analysis.html');
 });
 
+app.get('/home', function(req, res) {
+    res.sendfile(__dirname + '/src/home.html');
+});
+
+app.get('/progress', function(req, res) {
+    res.sendfile(__dirname + '/src/progress.html');
+});
+
 app.get('/*', function(req, res) {
     res.sendfile(__dirname + '/src/error404.html');
 });
 
-app.listen(3000);
+app.listen(8000);
