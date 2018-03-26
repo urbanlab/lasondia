@@ -1,0 +1,5 @@
+#ignoring all recordings
+*.wav
+
+#ignoring node modules
+/Node/node_modules
