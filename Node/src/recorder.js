@@ -1,9 +1,13 @@
 var mic, recorder, soundFile;
 var gommettesVolume = [];
+var gommettesInfos = [];
 var gommettesStep = 10;
 var gommettesSize = 200;
 
 var trueRecord = false;
+
+var jsonRecord = {}; // new  JSON Object
+
 
 function setup() {
 
@@ -16,22 +20,11 @@ function setup() {
   // users must manually enable their browser microphone for recording to work properly!
   mic.start();
 
-  // create a sound recorder
-  //recorder = new p5.SoundRecorder();
-
-  // connect the mic to the recorder
-  //recorder.setInput(mic);
-
-  // create an empty sound file that we will use to playback the recording
-  //soundFile = new p5.SoundFile();
-
   var max = int(width/gommettesStep);
   console.log("Max is : " + max);
   for (i = 0; i < max; i++) {
     gommettesVolume.push(0);
   }
-
-//  capture = createCapture(AUDIO);
 
 }
 
@@ -45,10 +38,15 @@ function addRecord(){
   var len = gommettesVolume.length;
   var max = int(width/gommettesStep);
   if(len >= max){
-    console.log("Volume is : " + volume);
+    //console.log("Volume is : " + volume);
     gommettesVolume.splice(0, 1);
   }
 
+}
+
+function addGomette(numGomette){
+  var gomette = {time:new Date(), eventType:numGomette, color:"#FB4807"};
+  socket.emit('event', gomette);
 }
 
 function draw() {
@@ -56,7 +54,7 @@ function draw() {
   background(255);
 
   //addRecord();
-  
+
 /*
   //console.log("Volume : " + volume);
   if(trueRecord == false && record == true){

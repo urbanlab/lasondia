@@ -38,7 +38,7 @@
 
       recorder.onaudioprocess = function(e){
         if(!recording) return;
-        console.log ('recording');
+        //console.log ('recording');
         var left = e.inputBuffer.getChannelData(0);
         window.Stream.write(convertoFloat32ToInt16(left));
       }

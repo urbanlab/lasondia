@@ -1,6 +1,8 @@
 // Tmp allows to create random file name
 var tmp = require('tmp');
 tmp.setGracefulCleanup();
+var outFile;
+var outFolder;
 
 var url = require('url');
 var fs = require('fs');
@@ -14,16 +16,16 @@ var wav = require('wav');
 
 var port = 3700;
 
+var eventsToJson = [];
+
 binaryServer = BinaryServer({port: 9001});
 
 binaryServer.on('connection', function(client) {
   console.log('new connection');
 
-
   client.on('stream', function(stream, meta) {
 
-    var tmpobj = tmp.dirSync({ template: './records/tmp-XXXXXX' });
-    var outFile = tmpobj.name + "/fullRecord.wav";
+    var outFile = outFolder + "/fullRecord.wav";
     //console.log('Future file : ' , outfile);
 
     var fileWriter = new wav.FileWriter(outFile, {
@@ -37,6 +39,7 @@ binaryServer.on('connection', function(client) {
 
     stream.on('end', function() {
       fileWriter.end();
+      fs.writeFile(outFolder + '/events.json', JSON.stringify(eventsToJson));
       console.log('wrote to file ' + outFile);
     });
   });
@@ -48,6 +51,17 @@ io.sockets.on('connection', newConnection);
 
 function newConnection(socket){
   console.log("New connection: " + socket.id);
+
+  var tmpobj = tmp.dirSync({ template: './records/tmp-XXXXXX' });
+  outFolder = tmpobj.name;
+
+  socket.on('event', newGommette);
+
+}
+
+function newGommette(gommetteDatas){
+  console.log("New gomette !!!!!!!! : " + JSON.stringify(gommetteDatas));
+  eventsToJson.push(gommetteDatas);
 }
 
 app.use('/src', express.static(__dirname + '/src'));
