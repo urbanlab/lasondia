@@ -5,11 +5,17 @@
   <meta charset="UTF-8">
   <title>Recorder</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/src/binaryjs.min.js"></script>
+  <script src="/src/recorder.js"></script>
 
   <script src="/src/p5/p5.js" type="text/javascript"></script>
   <script src="/src/p5/p5.dom.js" type="text/javascript"></script>
   <script src="/src/p5/p5.sound.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 
+  <script>
+    var socket = io('http://localhost:3000/');
+  </script>
   <!-- Actions Boutons-->
   <script>
     var record = false;
@@ -18,9 +24,13 @@
         if (record == false) {
           record = true;
           document.getElementById("btnStartStop").innerHTML = "Stop";
+
+          startRecording();
         } else {
           record = false;
           document.getElementById("btnStartStop").innerHTML = "Start";
+
+          stopRecording();
         }
       });
     });

@@ -23,7 +23,7 @@ function setup() {
   recorder.setInput(mic);
 
   // create an empty sound file that we will use to playback the recording
-  soundFile = new p5.SoundFile();
+//  soundFile = new p5.SoundFile();
 
   var max = int(width/gommettesStep);
   console.log("Max is : " + max);
@@ -31,7 +31,7 @@ function setup() {
     gommettesVolume.push(0);
   }
 
-  capture = createCapture(AUDIO);
+//  capture = createCapture(AUDIO);
 
 }
 
@@ -55,7 +55,7 @@ function draw() {
   background(250);
 
   //addRecord();
-
+/*
   //console.log("Volume : " + volume);
   if(trueRecord == false && record == true){
     // Tell recorder to record to a p5.SoundFile which we will use for playback
@@ -71,12 +71,9 @@ function draw() {
     console.log(recorder);
   //  saveSound(soundFile); // save file
 
-    var audio = document.createElement('audio');
-    var blob = new Blob([recorder.buffer[0], recorder.buffer[1]], { 'type' : 'audio/wav' });
-    audio.src = window.URL.createObjectURL(blob);
-    audio.play();
 
   }
+  */
 
   if(record == 1 && mic.enabled){
     fill(100, 100, 200, 50);
