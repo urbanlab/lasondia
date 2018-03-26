@@ -1,6 +1,8 @@
 import io
 import os
 import wave
+import json
+import datetime
 import contextlib
 from pydub import AudioSegment
 from cutter import cutter
@@ -64,6 +66,27 @@ def analyse(file_name,file_path=os.getcwd(),duration=3):
         output.append((file,text))
     return output
 
-print(analyse('example.wav',duration=20))
+## write the json file
+output = analyse('Cours express - Zoom.wav',duration=3)
+os.chdir(os.path.normpath(os.getcwd() + os.sep + os.pardir))
+data = [output[0][0][:-9]]
+for i in range(len(output)):
+    if output[i][1] == None:
+        data.append({
+       'music' : True,
+       'time' : str(datetime.timedelta(seconds=i*3)),
+       'text' : None
+        })
+    else:
+        data.append({
+       'music' : False,
+       'time' : str(datetime.timedelta(seconds=i*3)),
+       'text' : output[i][1]
+        })
+json_name = output[0][0][:-9] + '_voices.json'
+with open(json_name, 'w') as f:
+    json.dump(data, f, indent=4, sort_keys=True, ensure_ascii=False)
+
+
 
 
