@@ -4,6 +4,8 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 
+app.use('/src', express.static(__dirname + '/src'));
+
 app.get('/', function(req, res) {
     res.sendfile(__dirname + '/src/home.html');
 });
