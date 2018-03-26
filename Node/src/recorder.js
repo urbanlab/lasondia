@@ -1,59 +1,93 @@
-(function(window) {
-  var client = new BinaryClient('ws://localhost:9001');
+var mic, recorder, soundFile;
+var gommettesVolume = [];
+var gommettesStep = 10;
+var gommettesSize = 200;
 
-  client.on('open', function() {
-    window.Stream = client.createStream();
+var trueRecord = false;
 
-    if (!navigator.getUserMedia)
-      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
-    navigator.mozGetUserMedia || navigator.msGetUserMedia;
+function setup() {
 
-    if (navigator.getUserMedia) {
-      navigator.getUserMedia({audio:true}, success, function(e) {
-        alert('Error capturing audio.');
-      });
-    } else alert('getUserMedia not supported in this browser.');
+  createCanvas(windowWidth, windowHeight);
+  background(250);
+  fill(0);
 
-    var recording = false;
+  // create an audio in
+  mic = new p5.AudioIn();
+  // users must manually enable their browser microphone for recording to work properly!
+  mic.start();
 
-    window.startRecording = function() {
-      recording = true;
-    }
+  // create a sound recorder
+  //recorder = new p5.SoundRecorder();
 
-    window.stopRecording = function() {
-      recording = false;
-      window.Stream.end();
-    }
+  // connect the mic to the recorder
+  //recorder.setInput(mic);
 
-    function success(e) {
-      audioContext = window.AudioContext || window.webkitAudioContext;
-      context = new audioContext();
+  // create an empty sound file that we will use to playback the recording
+  //soundFile = new p5.SoundFile();
 
-      // the sample rate is in context.sampleRate
-      audioInput = context.createMediaStreamSource(e);
+  var max = int(width/gommettesStep);
+  console.log("Max is : " + max);
+  for (i = 0; i < max; i++) {
+    gommettesVolume.push(0);
+  }
 
-      var bufferSize = 2048;
-      recorder = context.createScriptProcessor(bufferSize, 1, 1);
+//  capture = createCapture(AUDIO);
 
-      recorder.onaudioprocess = function(e){
-        if(!recording) return;
-        console.log ('recording');
-        var left = e.inputBuffer.getChannelData(0);
-        window.Stream.write(convertoFloat32ToInt16(left));
-      }
+}
 
-      audioInput.connect(recorder)
-      recorder.connect(context.destination);
-    }
+window.setInterval(addRecord, 75);
 
-    function convertoFloat32ToInt16(buffer) {
-      var l = buffer.length;
-      var buf = new Int16Array(l)
+function addRecord(){
+  // Get the overall volume (between 0 and 1.0)
+  var volume = mic.getLevel();
+  gommettesVolume.push(volume);
 
-      while (l--) {
-        buf[l] = buffer[l]*0xFFFF;    //convert to 16 bit
-      }
-      return buf.buffer
-    }
-  });
-})(this);
+  var len = gommettesVolume.length;
+  var max = int(width/gommettesStep);
+  if(len >= max){
+    console.log("Volume is : " + volume);
+    gommettesVolume.splice(0, 1);
+  }
+
+}
+
+function draw() {
+
+  background(255);
+
+  //addRecord();
+  
+/*
+  //console.log("Volume : " + volume);
+  if(trueRecord == false && record == true){
+    // Tell recorder to record to a p5.SoundFile which we will use for playback
+    trueRecord = true;
+    recorder.record(soundFile);
+  }
+
+  if(trueRecord == true && record == false){
+    // stop recorder, and send the result to soundFile
+    trueRecord = false;
+    recorder.stop();
+
+    console.log(recorder);
+  //  saveSound(soundFile); // save file
+
+
+  }
+  */
+
+  if(record == 1 && mic.enabled){
+    fill(100, 100, 200, 50);
+  }else{
+    fill(100, 100, 100, 50);
+  }
+
+  var len = gommettesVolume.length;
+  for (i = 0; i < len; i++) {
+    //console.log("Ellipse " + i);
+    ellipse(width - len*gommettesStep + i*gommettesStep, 0.5*height, gommettesSize * gommettesVolume[i], gommettesSize * gommettesVolume[i]);
+  }
+
+
+}

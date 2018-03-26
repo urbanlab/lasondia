@@ -1,3 +1,7 @@
+// Tmp allows to create random file name
+var tmp = require('tmp');
+tmp.setGracefulCleanup();
+
 var url = require('url');
 var fs = require('fs');
 var express = require('express');
@@ -9,20 +13,25 @@ var BinaryServer = require('binaryjs').BinaryServer;
 var wav = require('wav');
 
 var port = 3700;
-var outFile = 'demo.wav';
 
 binaryServer = BinaryServer({port: 9001});
 
 binaryServer.on('connection', function(client) {
   console.log('new connection');
 
-  var fileWriter = new wav.FileWriter(outFile, {
-    channels: 1,
-    sampleRate: 48000,
-    bitDepth: 16
-  });
 
   client.on('stream', function(stream, meta) {
+
+    var tmpobj = tmp.dirSync({ template: './records/tmp-XXXXXX' });
+    var outFile = tmpobj.name + "/fullRecord.wav";
+    //console.log('Future file : ' , outfile);
+
+    var fileWriter = new wav.FileWriter(outFile, {
+      channels: 1,
+      sampleRate: 48000,
+      bitDepth: 16
+    });
+
     console.log('new stream');
     stream.pipe(fileWriter);
 
@@ -38,25 +47,25 @@ binaryServer.on('connection', function(client) {
 io.sockets.on('connection', newConnection);
 
 function newConnection(socket){
-    console.log("New connection: " + socket.id);
+  console.log("New connection: " + socket.id);
 }
 
 app.use('/src', express.static(__dirname + '/src'));
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/src/home.html');
+  res.sendFile(__dirname + '/src/home.html');
 });
 
 app.get('/record', function(req, res) {
-    res.sendFile(__dirname + '/src/record.html');
+  res.sendFile(__dirname + '/src/record.html');
 });
 
 app.get('/analysis', function(req, res) {
-    res.sendFile(__dirname + '/src/analysis.html');
+  res.sendFile(__dirname + '/src/analysis.html');
 });
 
 app.get('/*', function(req, res) {
-    res.sendFile(__dirname + '/src/error404.html');
+  res.sendFile(__dirname + '/src/error404.html');
 });
 
 http.listen(3000, function(){
