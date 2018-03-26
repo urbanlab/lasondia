@@ -1,0 +1,17 @@
+{
+  "fileName": "grosFichier.wav",
+  "voices": [
+    {
+      "music": "true",
+      "time": "00:00:00:000",
+      "voice": "None"
+    }
+  ],
+  "events": [
+    {
+      "time": "00:00:00:000",
+      "eventType": "event1",
+      "eventColor": "#FFFFFF"
+    }
+  ]
+}

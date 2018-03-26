@@ -51,7 +51,15 @@ function draw() {
     // stop recorder, and send the result to soundFile
     trueRecord = false;
     recorder.stop(); 
-    saveSound(soundFile); // save file
+    
+    console.log(recorder);
+  //  saveSound(soundFile); // save file
+  
+    var audio = document.createElement('audio');
+    var blob = new Blob([recorder.buffer[0], recorder.buffer[1]], { 'type' : 'audio/wav' });
+    audio.src = window.URL.createObjectURL(blob);
+    audio.play();
+    
   }
 
   if(record == 1 && mic.enabled){
