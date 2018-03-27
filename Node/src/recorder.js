@@ -7,6 +7,16 @@ var trueRecord = false;
 
 var jsonRecord = {}; // new  JSON Object
 
+var gomette1, gomette2, gomette3, gomette4, gomette5, gomette6;
+
+function preload() {
+  gomette1 = loadImage('../images/Gommettes/SansOmbre/08.png');
+  gomette2 = loadImage('../images/Gommettes/SansOmbre/09.png');
+  gomette3 = loadImage('../images/Gommettes/SansOmbre/10.png');
+  gomette4 = loadImage('../images/Gommettes/SansOmbre/11.png');
+  gomette5 = loadImage('../images/Gommettes/SansOmbre/12.png');
+  gomette6 = loadImage('../images/Gommettes/SansOmbre/30.png');
+}
 
 function setup() {
 
@@ -70,17 +80,54 @@ function draw() {
   }
 
   addRecord(0);
+  drawTimeline();
+  drawGommettes();
+}
 
+function drawTimeline(){
   var len = gommettes.length;
   for (i = 0; i < len; i++) {
+
+    var posX = width - len*gommettesStep + i*gommettesStep;
+    var posY = 0.5*height;
+
     //console.log("Volume is : ", gommettesVolume[i]);
     var realSize = map(gommettes[i].volume, 0, 0.01, 5, 200, true);
-    ellipse(width - len*gommettesStep + i*gommettesStep, 0.5*height, realSize, realSize);
+    ellipse(posX, posY, realSize, realSize);
+  }
+}
 
-    if(gommettes[i].num != 0){
-        ellipse(width - len*gommettesStep + i*gommettesStep, 0.5*height + 50, 25, 25);
+function drawGommettes(){
+
+  var len = gommettes.length;
+
+  for (i = 0; i < len; i++) {
+
+    var posX = width - len*gommettesStep + i*gommettesStep;
+    var posY = 0.75*height;
+
+
+    switch (gommettes[i].num) {
+      case 1:
+      image(gomette1, posX, posY, 25, 25);
+      break;
+      case 2:
+      image(gomette2, posX, posY, 25, 25);
+      break;
+      case 3:
+      image(gomette3, posX, posY, 25, 25);
+      break;
+      case 4:
+      image(gomette4, posX, posY, 25, 25);
+      break;
+      case 5:
+      image(gomette5, posX, posY, 25, 25);
+      break;
+      case 6:
+      image(gomette6, posX, posY, 25, 25);
+      break;
+      default:
+      // No image
     }
   }
-
-
 }

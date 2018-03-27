@@ -16,57 +16,57 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 
   <script>
-    var socket = io('http://localhost:3000/');
+  var socket = io('http://localhost:3000/');
   </script>
   <!-- Actions Boutons-->
   <script>
-    var record = false;
-    $(document).ready(function() {
-      // Start Stop Recording
-      $("#btnStartStop").click(function() {
-        if (record == false) {
-          record = true;
-          document.getElementById("btnStartStop").innerHTML = "Stop";
-          startRecording();
-        } else {
-          record = false;
-          document.getElementById("btnStartStop").innerHTML = "Start";
-          stopRecording();
-        }
-      });
-
-      // Ajout de gommette
-      $("#btnGommette1").click(function() {
-        addGomette(1);
-      });
-      $("#btnGommette2").click(function() {
-        addGomette(2);
-      });
-      $("#btnGommette3").click(function() {
-        addGomette(3);
-      });
-      $("#btnGommette4").click(function() {
-        addGomette(4);
-      });
-      $("#btnGommette5").click(function() {
-        addGomette(5);
-      });
-      $("#btnGommette6").click(function() {
-        addGomette(6);
-      });
+  var record = false;
+  $(document).ready(function() {
+    // Start Stop Recording
+    $("#btnStartStop").click(function() {
+      if (record == false) {
+        record = true;
+        document.getElementById("btnStartStop").innerHTML = "Stop";
+        startRecording();
+      } else {
+        record = false;
+        document.getElementById("btnStartStop").innerHTML = "Start";
+        stopRecording();
+      }
     });
+
+    // Ajout de gommette
+    $("#btnGommette1").click(function() {
+      addGomette(1);
+    });
+    $("#btnGommette2").click(function() {
+      addGomette(2);
+    });
+    $("#btnGommette3").click(function() {
+      addGomette(3);
+    });
+    $("#btnGommette4").click(function() {
+      addGomette(4);
+    });
+    $("#btnGommette5").click(function() {
+      addGomette(5);
+    });
+    $("#btnGommette6").click(function() {
+      addGomette(6);
+    });
+  });
   </script>
 
-  <link rel="stylesheet" type="text/css" href="/src/recorder.css">
+  <link rel="stylesheet" type="text/css" href="../css/recorder.css">
   <style>
-    body {
-      padding: 0;
-      margin: 0;
-    }
+  body {
+    padding: 0;
+    margin: 0;
+  }
 
-    canvas {
-      vertical-align: top;
-    }
+  canvas {
+    vertical-align: top;
+  }
   </style>
 
 </head>
@@ -79,26 +79,30 @@
     <div class="container">
       <!-- Boutons-->
       <div class="startStopGroup">
-      <table>
-        <td width="15%">
-          <div>Enregistrer</div>
-        </td>
-        <td width="85%">
-          <label class="btnStartStop">
-              <input type="checkbox" id="btnStartStop">
-              <span class="slider round"></span>
-          </label>
-          </td>
-      </table>
+        <table>
+          <tr>
+            <td width="15%">
+              <div>Enregistrer</div>
+            </td>
+            <td width="85%">
+              <label class="btnStartStop">
+                <input type="checkbox" id="btnStartStop">
+                <span class="slider round"></span>
+              </label>
+            </td>
+          </tr>
+        </table>
       </div>
       <!-- Boutons gommettes-->
-      <div class="colorGroup">
-        <button class="button gomette1 gomettes" type="button" id="btnGommette1"></button>
-        <button class="button gomettes gomette2" type="button" id="btnGommette2"></button>
-        <button class="button gomettes gomette3" type="button" id="btnGommette3"></button>
-        <button class="button gomettes gomette4" type="button" id="btnGommette4"></button>
-        <button class="button gomettes gomette5" type="button" id="btnGommette5"></button>
-        <button class="button gomettes gomette6" type="button" id="btnGommette6"></button>
+      <div class="bottom">
+        <div class="colorGroup">
+          <button class="button gomettes gomette1" type="button" id="btnGommette1"></button>
+          <button class="button gomettes gomette2" type="button" id="btnGommette2"></button>
+          <button class="button gomettes gomette3" type="button" id="btnGommette3"></button>
+          <button class="button gomettes gomette4" type="button" id="btnGommette4"></button>
+          <button class="button gomettes gomette5" type="button" id="btnGommette5"></button>
+          <button class="button gomettes gomette6" type="button" id="btnGommette6"></button>
+        </div>
       </div>
     </div>
   </div>

@@ -76,6 +76,8 @@ binaryServer.on('connection', function(client) {
 app.use('/src', express.static(__dirname + '/src'));
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use('/images', express.static(__dirname + '/images'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/fonts', express.static(__dirname + '/fonts'));
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/src/home.html');

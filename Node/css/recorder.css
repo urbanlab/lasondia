@@ -1,4 +1,11 @@
 .ui {
+
+  font-family: "OpenSans";
+
+  background: url('../images/Interface_Fond.png');
+  background-position:center;
+  background-repeat: no-repeat;
+
   position: absolute;
   top: 0;
   left: 0;
@@ -90,7 +97,7 @@ input:checked + .slider:before {
   margin-right: 20px;
 }
 .gomette1 {
-  background: url('../images/Gommettes/08.png');
+  background: url('../images/Gommettes/AvecOmbre/08.png');
   background-size: 70px 76px;
   background-position:center;
   background-repeat: no-repeat;
@@ -137,14 +144,30 @@ input:checked + .slider:before {
     cursor: not-allowed;
 }
 
-.colorGroup {
-  float: left;
+.bottom{
+  background-image: url('../images/menu-toggle-bas-full-51.png');
+  background-position:center;
+  background-repeat: no-repeat;
 
   position: fixed;
   top: 70%;
-  left: 10%;
+  left: 0%;
   right: 0;
   bottom: 0;
+
+
+}
+.colorGroup {
+  /* background-image: url('../images/menu-toggle-bas-full-51.png'); */
+
+  float: left;
+
+  position: relative;
+  top: 30%;
+  left: 0;
+  right: 0;
+  bottom: 0; */
+
 }
 
 .symbolGroup {
