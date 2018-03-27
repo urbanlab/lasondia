@@ -24,11 +24,18 @@ io.sockets.on('connection', newConnection);
 function newConnection(socket){
   console.log("New socket connection: " + socket.id);
   socket.on('event', newGommette);
+  socket.on('recordList', sendRecordList);
 }
 
 function newGommette(gommetteDatas){
   console.log("New gomette !!!!!!!! : " + JSON.stringify(gommetteDatas));
   eventsToJson.push(gommetteDatas);
+}
+
+function sendRecordList(){
+  // Lire le répertoire
+  // Constituer le JSON
+  // Envoyer le JSON
 }
 
 binaryServer = BinaryServer({port: 9001});
