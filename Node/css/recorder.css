@@ -1,6 +1,7 @@
 .ui {
 
   font-family: "OpenSans";
+  color: "#695b54";
 
   background: url('../images/Interface_Fond.png');
   background-position:center;
@@ -11,6 +12,21 @@
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.comment{
+  position: fixed;
+  top: 1%;
+  left: 5%;
+  right: 0;
+  bottom: 0;
+}
+.comment input{
+  font-family: "VistaSans";
+  font-size: 50px;
+  border-style: none;
+  width: 400px;
+  height: auto;
 }
 
 .btnStartStop {
