@@ -6,16 +6,124 @@
   bottom: 0;
 }
 
-.button {
+.btnStartStop {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.startStopGroup {
+  position: fixed;
+  width: 60px;
+  height: 34px;
+  top: 5%;
+  left: 85%;
+  right: 0;
+  bottom: 0;
+}
+
+.switch input {display:none;}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
   background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.button {
+  background-color: white;*/
+
+  padding: 5px;
+  border: 0px solid #FFFFFF;
+
   color: black;
-  border: 2px solid #008CBA;
   /* Light Blue */
-  padding: 16px;
-  border-radius: 8px;
   -webkit-transition-duration: 0.4s;
   /* Safari */
   transition-duration: 0.4s;
+
+}
+.gomettes {
+  width:93px;
+  height:102px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.gomette1 {
+  background: url('../images/Gommettes/08.png');
+  background-size: 70px 76px;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+.gomette2 {
+  background: url('../images/Gommettes/AvecOmbre/09.png');
+  background-size: 70px 76px;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+.gomette3 {
+  background: url('../images/Gommettes/AvecOmbre/10.png');
+  background-size: 70px 76px;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+.gomette4 {
+  background: url('../images/Gommettes/AvecOmbre/11.png');
+  background-size: 70px 76px;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+.gomette5 {
+  background: url('../images/Gommettes/AvecOmbre/12.png');
+  background-size: 70px 76px;
+  background-position:center;
+  background-repeat: no-repeat;
+}
+.gomette6 {
+  background: url('../images/Gommettes/AvecOmbre/30.png');
+  background-size: 70px 76px;
+  background-position:center;
+  background-repeat: no-repeat;
 }
 
 .button:hover {
@@ -29,27 +137,19 @@
     cursor: not-allowed;
 }
 
-.startStopGroup {
-  position: fixed;
-  top: 70%;
-  left: 2%;
-  right: 0;
-  bottom: 0;
-}
-
 .colorGroup {
   float: left;
-  
+
   position: fixed;
-  top: 80%;
-  left: 2%;
+  top: 70%;
+  left: 10%;
   right: 0;
   bottom: 0;
 }
 
 .symbolGroup {
   float: left;
-    
+
   position: fixed;
   top: 90%;
   left: 2%;

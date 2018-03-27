@@ -1,6 +1,9 @@
+
+var liveVolume;
+
 (function(window) {
   var client = new BinaryClient('ws://localhost:9001');
-  var liveVolume;
+
 
   client.on('open', function() {
     //window.Stream = client.createStream();
@@ -33,7 +36,6 @@
 
       // the sample rate is in context.sampleRate
       audioInput = context.createMediaStreamSource(e);
-
       var bufferSize = 2048;
       recorder = context.createScriptProcessor(bufferSize, 1, 1);
 
@@ -41,6 +43,13 @@
         if(!recording) return;
         //console.log ('recording');
         var left = e.inputBuffer.getChannelData(0);
+        liveVolume = 0;
+        for(i = 0; i < left.length; i++){
+          liveVolume += abs(left[i]);
+        }
+        liveVolume /= left.length;
+        // console.log('sending left : ', left);
+        // console.log('sending volume : ', liveVolume);
         window.Stream.write(convertoFloat32ToInt16(left));
       }
 
