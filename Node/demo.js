@@ -18,15 +18,33 @@ var port = 3700;
 
 var eventsToJson = [];
 
-binaryServer = BinaryServer({port: 9001});
+// Socket section
+io.sockets.on('connection', newConnection);
 
+function newConnection(socket){
+  console.log("New socket connection: " + socket.id);
+  socket.on('event', newGommette);
+}
+
+function newGommette(gommetteDatas){
+  console.log("New gomette !!!!!!!! : " + JSON.stringify(gommetteDatas));
+  eventsToJson.push(gommetteDatas);
+}
+
+binaryServer = BinaryServer({port: 9001});
 binaryServer.on('connection', function(client) {
-  console.log('new connection');
+  console.log('new connection on stream server');
 
   client.on('stream', function(stream, meta) {
 
+    // New directory with any new stream
+    var tmpobj = tmp.dirSync({ template: './records/record-XXXXXX' });
+    outFolder = tmpobj.name;
     var outFile = outFolder + "/fullRecord.wav";
-    //console.log('Future file : ' , outfile);
+    tmpobj = tmp.fileSync(outFile);
+    tmpobj.removeCallback();
+    //
+    console.log('Creation new file : ', outFile);
 
     var fileWriter = new wav.FileWriter(outFile, {
       channels: 1,
@@ -38,31 +56,15 @@ binaryServer.on('connection', function(client) {
     stream.pipe(fileWriter);
 
     stream.on('end', function() {
+      console.log("End record.");
+      // Write wav file
       fileWriter.end();
+      // Write JSON Events
       fs.writeFile(outFolder + '/events.json', JSON.stringify(eventsToJson));
       console.log('wrote to file ' + outFile);
     });
   });
 });
-
-// Socket section
-
-io.sockets.on('connection', newConnection);
-
-function newConnection(socket){
-  console.log("New connection: " + socket.id);
-
-  var tmpobj = tmp.dirSync({ template: './records/tmp-XXXXXX' });
-  outFolder = tmpobj.name;
-
-  socket.on('event', newGommette);
-
-}
-
-function newGommette(gommetteDatas){
-  console.log("New gomette !!!!!!!! : " + JSON.stringify(gommetteDatas));
-  eventsToJson.push(gommetteDatas);
-}
 
 app.use('/src', express.static(__dirname + '/src'));
 
@@ -92,4 +94,3 @@ app.get('/*', function(req, res) {
 
 
 app.listen(8000);
-

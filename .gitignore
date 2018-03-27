@@ -3,3 +3,4 @@
 
 #ignoring node modules
 /Node/node_modules
+/Node/records/record-*
