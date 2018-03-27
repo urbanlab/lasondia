@@ -7,15 +7,47 @@
 }
 
 .button {
-  background-color: white;
+  background-color: white;*/
+
+  padding: 5px;
+  border: 0px solid #FFFFFF;
+
   color: black;
-  border: 2px solid #008CBA;
   /* Light Blue */
-  padding: 16px;
-  border-radius: 8px;
   -webkit-transition-duration: 0.4s;
   /* Safari */
   transition-duration: 0.4s;
+
+}
+.gomettes {
+  width:120px;
+  height:102px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.gomette1 {
+  background: url('../images/Gommettes/08.png');
+  background-repeat: no-repeat;
+}
+.gomette2 {
+  background: url('../images/Gommettes/09.png');
+    background-repeat: no-repeat;
+}
+.gomette3 {
+  background: url('../images/Gommettes/10.png');
+    background-repeat: no-repeat;
+}
+.gomette4 {
+  background: url('../images/Gommettes/11.png');
+    background-repeat: no-repeat;
+}
+.gomette5 {
+  background: url('../images/Gommettes/12.png');
+    background-repeat: no-repeat;
+}
+.gomette6 {
+  background: url('../images/Gommettes/30.png');
+    background-repeat: no-repeat;
 }
 
 .button:hover {
@@ -31,7 +63,7 @@
 
 .startStopGroup {
   position: fixed;
-  top: 70%;
+  top: 60%;
   left: 2%;
   right: 0;
   bottom: 0;
@@ -39,17 +71,17 @@
 
 .colorGroup {
   float: left;
-  
+
   position: fixed;
-  top: 80%;
-  left: 2%;
+  top: 70%;
+  left: 10%;
   right: 0;
   bottom: 0;
 }
 
 .symbolGroup {
   float: left;
-    
+
   position: fixed;
   top: 90%;
   left: 2%;

@@ -27,12 +27,10 @@
         if (record == false) {
           record = true;
           document.getElementById("btnStartStop").innerHTML = "Stop";
-
           startRecording();
         } else {
           record = false;
           document.getElementById("btnStartStop").innerHTML = "Start";
-
           stopRecording();
         }
       });
@@ -53,7 +51,9 @@
       $("#btnGommette5").click(function() {
         addGomette(5);
       });
-
+      $("#btnGommette6").click(function() {
+        addGomette(6);
+      });
     });
   </script>
 
@@ -83,11 +83,12 @@
       </div>
       <!-- Boutons gommettes-->
       <div class="colorGroup"}>
-        <button class="button" type="button" id="btnGommette1">1</button>
-        <button class="button" type="button" id="btnGommette2">2</button>
-        <button class="button" type="button" id="btnGommette3">3</button>
-        <button class="button" type="button" id="btnGommette4">4</button>
-        <button class="button" type="button" id="btnGommette5">5</button>
+        <button class="button gomettes gomette1" type="button" id="btnGommette1"></button>
+        <button class="button gomettes gomette2" type="button" id="btnGommette2"></button>
+        <button class="button gomettes gomette3" type="button" id="btnGommette3"></button>
+        <button class="button gomettes gomette4" type="button" id="btnGommette4"></button>
+        <button class="button gomettes gomette5" type="button" id="btnGommette5"></button>
+        <button class="button gomettes gomette6" type="button" id="btnGommette6"></button>
       </div>
     </div>
   </div>

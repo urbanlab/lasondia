@@ -67,6 +67,7 @@ binaryServer.on('connection', function(client) {
 });
 
 app.use('/src', express.static(__dirname + '/src'));
+app.use('/images', express.static(__dirname + '/images'));
 
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/src/home.html');
