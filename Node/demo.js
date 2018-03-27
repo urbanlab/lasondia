@@ -90,10 +90,6 @@ app.get('/*', function(req, res) {
   res.sendFile(__dirname + '/src/error404.html');
 });
 
-<<<<<<< HEAD
-http.listen(3000, function(){
-  console.log('listening on *:3000');
-});
-=======
+
 app.listen(8000);
->>>>>>> 862434092a658eb70c5de61d85d3bbf30993d50a
+
