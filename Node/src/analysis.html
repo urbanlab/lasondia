@@ -4,16 +4,21 @@
 <head>
     <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
     <link rel="stylesheet" href="/src/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
-    <h1>ANALYSIS</h1>
-    <div id="peaks-container"></div>
-    <audio controls autoplay id="audio">
-        <source src="/src/untitled.wav" id="audio_source" type="audio/wav">
-    </audio>
-    <script src="node_modules/peaks.js/peaks.js"></script>
-    <script src="/src/analysis.js"></script>
+    <div id="nav-placeholder"></div>
+    <div class="content">
+        <h1>ANALYSIS</h1>
+        <div id="peaks-container"></div>
+        <audio controls autoplay id="audio">
+                <source src="/src/untitled.wav" id="audio_source" type="audio/wav">
+            </audio>
+        <script src="node_modules/peaks.js/peaks.js"></script>
+        <script src="/src/analysis.js"></script>
+    </div>
+    <script src="/src/navbar_loader.js"></script>
 </body>
 
 </html>
