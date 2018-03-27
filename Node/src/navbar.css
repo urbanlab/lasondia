@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'OpenSans-Regular';
+    src: url('/Fonts/OpenSans/OpenSans-Regular.ttf') format('ttf');
+}
+
+@keyframes showing {
+    from {
+        width: 0%;
+        min-width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 35%;
+        opacity: 1;
+        min-width: 150px;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.menu_bar {
+    animation-name: showing;
+    animation-duration: 300ms;
+}
+
+.menu_button {
+    font-family: 'OpenSans-Regular';
+    position: relative;
+    width: 100%;
+    text-align: center;
+    color: #1FB570;
+    font-size: 30px;
+    padding: 14px 0;
+}

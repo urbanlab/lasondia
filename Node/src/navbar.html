@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+    <link rel="stylesheet" href="/src/navbar.css">
+    <link rel="stylesheet" href="/src/style.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/src/navbar.js"></script>
+</head>
+
+<body>
+    <div style="left:0;width:10%;background-color:#190B01;height:100%;position:fixed;">
+        <div style="position: relative;width:100%;">
+            <img class="noselect" src="/images/Logo/logo.png" alt="logo" style="width:100%">
+        </div>
+        <div style="position:relative;top:40%;" onclick="toggleMenu()">
+            <img class="noselect" src="/images/Menu/burger.png" alt="logo" style="width:33%;position:relative;left:50%;transform:translate(-50%)">
+        </div>
+    </div>
+    <div id="menu" style="z-index:10;position: absolute;left:10%;width:90%;height:100%;display:none;">
+        <div class="menu_bar" style="position: relative;height:100%;width:35%;min-width:150px;background-color:#190B01;float:left;">
+            <div style="position: relative;top:15%;width:100%;">
+                <div class="menu_button noselect">Mes cours</div>
+                <div class="menu_button noselect">Ma progression</div>
+                <div class="menu_button noselect">Enregistrer</div>
+            </div>
+        </div>
+        <div style="position: relative;height:100%;width:65%;float:left;" onclick="tryHidingMenu()"></div>
+    </div>
+</body>
+
+</html>
