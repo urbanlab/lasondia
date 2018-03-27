@@ -27,6 +27,7 @@ Inspired by lesondier (http://www.lesondier.com/) and its sondbox
 
 ### Tech used, shopping list
 - P5.js for nice live visualisation
+- audio stream inspired (from https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js)
 - Python (wave library)
 - Google Speech To Text
 - Microphones
