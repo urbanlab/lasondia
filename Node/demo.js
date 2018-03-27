@@ -17,6 +17,7 @@ var wav = require('wav');
 var port = 3700;
 
 var eventsToJson = [];
+var recordsToJSON = []
 
 // Socket section
 io.sockets.on('connection', newConnection);
@@ -33,10 +34,23 @@ function newGommette(gommetteDatas) {
 }
 
 function sendRecordList(){
-  // Lire le répertoire
-  // Constituer le JSON
-  // Envoyer le JSON
-}
+    // Lire le répertoire
+    var recordsToJSON = []
+	var liste_dates = []
+	// Lire le répertoire
+	const testFolder = String(process.cwd()).concat('/records/');
+	const fs = require('fs');
+	var liste_files = fs.readdirSync(testFolder);
+	for (var i = 0 ; i < liste_files.length ; i++) {
+		var res = testFolder.concat(String(liste_files[0]));
+	    var stats = fs.statSync(res);
+		var mtime = stats.mtime;
+	    liste_dates.push(mtime);
+	};
+
+	var liste = [liste_files, liste_dates];
+	var recordsToJSON = JSON.stringify(liste);
+	}
 
 binaryServer = BinaryServer({port: 9001});
 binaryServer.on('connection', function(client) {
