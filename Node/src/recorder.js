@@ -16,9 +16,9 @@ function setup() {
   fill(0);
 
   // create an audio in
-  mic = new p5.AudioIn();
+  //mic = new p5.AudioIn();
   // users must manually enable their browser microphone for recording to work properly!
-  mic.start();
+  //mic.start();
 
   var max = int(width/gommettesStep);
   console.log("Max is : " + max);
@@ -32,7 +32,7 @@ window.setInterval(addRecord, 75);
 
 function addRecord(){
   // Get the overall volume (between 0 and 1.0)
-  var volume = mic.getLevel();
+  //var volume = mic.getLevel();
   gommettesVolume.push(volume);
 
   var len = gommettesVolume.length;

@@ -3,7 +3,7 @@
   var liveVolume;
 
   client.on('open', function() {
-    window.Stream = client.createStream();
+    //window.Stream = client.createStream();
 
     if (!navigator.getUserMedia)
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
@@ -19,6 +19,7 @@
 
     window.startRecording = function() {
       recording = true;
+      window.Stream = client.createStream();
     }
 
     window.stopRecording = function() {
@@ -45,7 +46,9 @@
 
       audioInput.connect(recorder)
       recorder.connect(context.destination);
+
     }
+
 
     function convertoFloat32ToInt16(buffer) {
       var l = buffer.length;
