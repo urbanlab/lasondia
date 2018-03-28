@@ -8,10 +8,35 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
-<body>
+<body class="noselect">
     <div id="nav-placeholder"></div>
     <div class="content">
-        <h1 id="title"></h1>
+        <div style="position: relative;width:100%;">
+            <div id="title"></div>
+            <div style="float: right;">
+                <ul class="checker_list">
+                    <li class="button_check">Musique
+                        <label class="switch">
+                            <input type="checkbox" checked onclick="toggleMusic()">
+                            <span class="slider round"></span>
+                        </label>
+                    </li>
+                    <li class="button_check">Voix
+                        <label class="switch">
+                            <input type="checkbox" checked onclick="toggleVoice()">
+                            <span class="slider round"></span>
+                        </label>
+                    </li>
+                    <li class="button_check">Gommettes
+                        <label class="switch">
+                            <input type="checkbox" checked onclick="toggleLabel()">
+                            <span class="slider round"></span>
+                        </label>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
         <div id="peaks-container"></div>
         <div id="create_audio"></div>
         <script src="/src/analysis.js"></script>
