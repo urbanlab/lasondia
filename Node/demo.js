@@ -44,6 +44,24 @@ function newGommette(gommetteDatas) {
     console.log("New gomette !!!!!!!! : " + JSON.stringify(gommetteDatas));
     eventsToJson.push(gommetteDatas);
 }
+// function UrlExists(url)
+// {
+//     var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+//     var http = new XMLHttpRequest();
+//     http.open('HEAD', url, false);
+//     http.send();
+//     return http.status==200;
+// }
+// function UrlExists(testUrl) {
+//     var $ = require('jquery');
+//     var http = $.ajax({
+//         type:"HEAD",
+//         url: testUrl,
+//         async: false
+//     })
+//     return http.status==200;
+//     // this will return 200 on success, and 0 or negative value on error
+// }
 
 function sendRecordList(){
   // Lire le répertoire
@@ -53,14 +71,19 @@ function sendRecordList(){
 	const testFolder = String(process.cwd()).concat('/records/');
 	const fs = require('fs');
 	var liste_files = fs.readdirSync(testFolder);
+  var clear_list = [];
 	for (var i = 0 ; i < liste_files.length ; i++) {
-		var res = testFolder.concat(String(liste_files[0]));
-	  var stats = fs.statSync(res);
-		var mtime = stats.mtime;
-	  liste_dates.push(mtime);
+    var file = testFolder.concat(liste_files[i].concat('/fullRecord_voices.json'))
+      if (fs.existsSync(file)) {
+        clear_list.push(liste_files[i])
+    		var res = testFolder.concat(String(liste_files[0]));
+    	  var stats = fs.statSync(res);
+    		var mtime = stats.mtime;
+    	  liste_dates.push(mtime);
+      }
 	};
 
-	var liste = [liste_files, liste_dates];
+	var liste = [clear_list, liste_dates];
 	recordsToJSON = JSON.stringify(liste);
 	records = liste;
 }

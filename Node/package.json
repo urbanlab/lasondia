@@ -23,7 +23,8 @@
     "requirejs": "^2.3.5",
     "socket.io": "^2.0.4",
     "tmp": "0.0.33",
-    "wav": "^1.0.1"
+    "wav": "^1.0.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {}
 }

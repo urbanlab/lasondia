@@ -22,7 +22,6 @@ var p
 var path = "/records/"+recordId+"/";
 
 function loadedSound() {
-  console.log('hey');
   initialize_peaks();
 }
 
@@ -37,19 +36,47 @@ readTextFile(path + "date.json", function(text) {
   var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   var frenchDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
   var french = frenchDays[days.indexOf(date.substr(0, 3))];
-  $('#title').html("Cours du " + french + " " + date.substr(5, date.length));
+  $('#title').html("Cours du " + french + " " + date.substr(4, date.length));
 });
+
+function getSeconds(date) {
+    var a = date.split(':');
+    //var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) + (+a[3]) / 1000;
+    var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+    return (seconds);
+}
+
+function getSecondsMS(date) {
+    var a = date.split(':');
+    var seconds = (+a[0]) * 60 + (+a[1]) + (+a[2]) / 1000;
+    return (seconds);
+}
+
+var gommettes = []
+readTextFile(path + "events.json", function(text) {
+  var gom = JSON.parse(text);
+  for (i in gom) {
+
+    gommettes.push({
+      time: getSecondsMS(gom[i].time),
+      editable: false,
+      color: "#ff0000",
+      labelText: ""
+    });
+  }
+});
+
+function zoomOut() {
+  p.zoom.zoomOut();
+}
+
+function zoomIn() {
+  p.zoom.zoomIn();
+}
 
 function initialize_peaks() {
     setTimeout(() => {
         (function(Peaks) {
-
-            function getSeconds(date) {
-                var a = date.split(':');
-                //var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) + (+a[3]) / 1000;
-                var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-                return (seconds);
-            }
 
             var tab_segments = [];
             var tab_seg = [];
@@ -136,7 +163,6 @@ function initialize_peaks() {
                     labelText: "Another point"
                 }]
             }
-
             p = Peaks.init({
                 container: options.container,
                 mediaElement: options.mediaElement,
@@ -144,11 +170,17 @@ function initialize_peaks() {
                 zoomLevels: options.zoomLevels,
                 segments: tab_seg,
                 zoomAdapter: options.zoomAdapter,
-                playheadColor: options.playheadColor
+                playheadColor: options.playheadColor,
+                points: gommettes
             });
 
             p.on('peaks.ready', function() {
                 // do something when the waveform is displayed and ready
+            });
+
+            p.on('zoom.update', function(before, after) {
+              console.log(before);
+              console.log(after);
             });
         })(peaks);
     }, 50);

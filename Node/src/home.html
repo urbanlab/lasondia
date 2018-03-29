@@ -81,17 +81,49 @@
     <script>
     var socket = io('http://192.168.81.109:8000/');
     socket.on('recordList', function(data) {
-      console.log('hey');
-      console.log(data);
       listRecordsLinks(data.recordList[0]);
     });
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
     function listRecordsLinks(recordsList) {
       var colors = ['1FB671','FB4807','FF695B','5FFFCD'];
       $('.records-list-container').empty();
       $()
+      var finalList = []
       for (var i = 0; i < recordsList.length; i++) {
-        var r = Math.floor(Math.random() * colors.length);
-        $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a href="/analysis#'+recordsList[i]+'">'+recordsList[i]+'</a><a href="/analysis#'+recordsList[i]+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
+        readTextFile("/records/" + recordsList[i] + "/date.json", function(text) {
+          var date = JSON.parse(text).date;
+          var day = date.substr(4, 10);
+          var hour = date.substr(15 , date.length);
+          var day_tab = day.split('/');
+          var actual_date = day_tab[2] + day_tab[1] + day_tab[0] + hour.split(':')[0] + hour.split(':')[1];
+          finalList.push({'actual_date':actual_date,'record':recordsList[i]});
+        });
+      }
+      finalList.sort(function(a,b){
+        if (a.actual_date && b.actual_date)
+          return (b.actual_date.toString().localeCompare(a.actual_date.toString()));
+        return (0);
+      });
+      for (var i = 0; i < finalList.length; i++) {
+        readTextFile("/records/" + finalList[i].record + "/date.json", function(text) {
+          var r = Math.floor(Math.random() * colors.length);
+          var date = JSON.parse(text).date;
+          var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+          var frenchDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+          var french = frenchDays[days.indexOf(date.substr(0, 3))];
+          var final = french + " " + date.substr(4, date.length)
+          $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a style="text-decoration:none;" href="/analysis#'+finalList[i].record+'">'+final+'</a><a href="/analysis#'+recordsList[i]+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
+        });
       }
     }
     </script>

@@ -92,3 +92,13 @@ input:checked+.slider:before {
     display: table;
     margin-right: 20px;
 }
+
+.zoom_button {
+  padding: 15px;
+  background-color: #5FFFCD;
+  display: inline-block;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #695B54;
+  font-family: "VistaSanMed";
+}

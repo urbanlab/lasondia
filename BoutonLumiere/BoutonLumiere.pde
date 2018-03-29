@@ -17,7 +17,7 @@ int DMXPRO_BAUDRATE=115000;
 // MAC PORT
 //String ARD_PORT="/dev/cu.SLAB_USBtoUART";//case matters ! on windows port must be upper cased.
 // LINUX PORT
-String ARD_PORT="/dev/ttyUSB1";
+String ARD_PORT="/dev/ttyUSB2";
 int ARD_BAUDRATE=9600;
 
 Serial btnPort;  // Create object from Serial class
@@ -55,7 +55,7 @@ void setup() {
   c = new GUIController(this);
   t = new IFTextField("Text Field", 25, 170, 150);
   lName = new IFLabel("max. brightness : ", 25, 155);
-  lValue = new IFLabel("", 100, 155);
+  lValue = new IFLabel("", 125, 155);
   
   c.add(t);
   c.add(lName);
