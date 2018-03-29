@@ -15,7 +15,7 @@
 }
 
 .comment{
-  position: fixed;
+  position: absolute;
   top: 1%;
   left: 5%;
   right: 0;
@@ -36,7 +36,7 @@
   height: 34px;
 }
 .startStopGroup {
-  position: fixed;
+  position: absolute;
   width: 60px;
   height: 34px;
   top: 5%;
@@ -162,12 +162,13 @@ input:checked + .slider:before {
 
 .bottom{
   background-image: url('../images/menu-toggle-bas-full-51.png');
-  background-position:center;
+  background-position:center bottom;
   background-repeat: no-repeat;
+  background-size: 100% 100%;
 
-  position: fixed;
-  top: 70%;
-  left: 0%;
+  position: absolute;
+  top: 80%;
+  left: 0;
   right: 0;
   bottom: 0;
 
@@ -178,7 +179,7 @@ input:checked + .slider:before {
 
   float: left;
 
-  position: relative;
+  position: absolute;
   top: 30%;
   left: 0;
   right: 0;

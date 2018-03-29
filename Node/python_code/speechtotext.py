@@ -96,5 +96,5 @@ date = {'date' : datetime.datetime.now().strftime("%a %d/%m/%Y %H:%M")}
 json_name = output[0][0][:-9] + '_voices.json'
 with open(json_name, 'w') as f:
     json.dump(data, f, indent=4, sort_keys=False, ensure_ascii=False)
-with open('date', 'w') as f:
+with open('date.json', 'w') as f:
     json.dump(date, f, indent=4, sort_keys=False, ensure_ascii=False)

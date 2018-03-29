@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
     <link rel="stylesheet" href="/src/style.css">
@@ -16,7 +16,6 @@
         float: left;
         width: 33.33%;
     }
-
     /* Clear floats after the columns */
     .row:after {
         content: "";
@@ -33,9 +32,9 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="content">
-    
+
     <div class="w3-main w3-content records-list-container" style="max-width:1600px;margin-top:83px">
-      
+
 
     </div>
 
@@ -81,23 +80,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script>
     var socket = io('http://192.168.81.109:8000/');
-
     socket.on('recordList', function(data) {
       console.log('hey');
       console.log(data);
-
       listRecordsLinks(data.recordList[0]);
     });
-
-
     function listRecordsLinks(recordsList) {
       var colors = ['1FB671','FB4807','FF695B','5FFFCD'];
-
       $('.records-list-container').empty();
       $()
       for (var i = 0; i < recordsList.length; i++) {
         var r = Math.floor(Math.random() * colors.length);
-        $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a href="/analysis#'+recordsList[i]+'">'+recordsList[i]+'<img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
+        $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a href="/analysis#'+recordsList[i]+'">'+recordsList[i]+'</a><a href="/analysis#'+recordsList[i]+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
       }
     }
     </script>
@@ -108,12 +102,10 @@
             document.getElementById("mySidebar").style.display = "block";
             document.getElementById("myOverlay").style.display = "block";
         }
-
         function w3_close() {
             document.getElementById("mySidebar").style.display = "none";
             document.getElementById("myOverlay").style.display = "none";
         }
-
         // Modal Image Gallery
         function onClick(element) {
             document.getElementById("img01").src = element.src;

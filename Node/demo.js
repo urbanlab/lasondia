@@ -33,8 +33,6 @@ function newConnection(socket){
     var recordId = data.recordSlug.substr(1,data.recordSlug.length);
     console.log(recordId);
 
-
-
   });
 
   sendRecordList();
@@ -95,9 +93,12 @@ binaryServer.on('connection', function(client) {
             console.log("End record.");
             // Write wav file
             fileWriter.end();
+            console.log('wrote to file ' + outFile);
+
             // Write JSON Events
             fs.writeFile(outFolder + '/events.json', JSON.stringify(eventsToJson));
-            console.log('wrote to file ' + outFile);
+            console.log('Full JSON written : ' + JSON.stringify(eventsToJson));
+
             var PythonShell = require('python-shell');
             var options = {
               scriptPath: __dirname + '/python_code',
@@ -141,4 +142,7 @@ app.get('/*', function(req, res) {
     res.sendFile(__dirname + '/src/error404.html');
 });
 
-app.listen(8000)
+
+http.listen(8000, function(){
+  console.log('port 8000')
+});

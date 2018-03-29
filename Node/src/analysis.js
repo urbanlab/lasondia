@@ -18,11 +18,26 @@ var voice_checked = true
 var label_checked = true
 var p
 
-readTextFile("/records/"+recordId+"/fullRecord_voices.json", function(text) {
+//recordId = "record-ZdUPkj";
+var path = "/records/"+recordId+"/";
+
+function loadedSound() {
+  console.log('hey');
+  initialize_peaks();
+}
+
+readTextFile(path+"fullRecord_voices.json", function(text) {
     data = JSON.parse(text);
-    //$('#create_audio').html("<audio controls autoplay id=\"audio\"><source src=\"" + data.fileName + "\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");
-    $('#create_audio').html("<audio controls id=\"audio\"><source src=\"" + data.fileName + "\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");
-    $('#title').html("Cours du " + data.date);
+    $('#create_audio').html("<audio onloadeddata=\"loadedSound()\" preload=\"true\" controls id=\"audio\"><source src=\"" + path + "fullRecord.wav\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");
+    //$('#create_audio').html("<audio onloadeddata=\"loadedSound()\" controls autoplay id=\"audio\"><source src=\"" + path + "fullRecord.wav\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");
+});
+
+readTextFile(path + "date.json", function(text) {
+  var date = JSON.parse(text).date;
+  var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  var frenchDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+  var french = frenchDays[days.indexOf(date.substr(0, 3))];
+  $('#title').html("Cours du " + french + " " + date.substr(5, date.length));
 });
 
 function initialize_peaks() {
@@ -31,21 +46,22 @@ function initialize_peaks() {
 
             function getSeconds(date) {
                 var a = date.split(':');
-                var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) + (+a[3]) / 1000;
+                //var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) + (+a[3]) / 1000;
+                var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
                 return (seconds);
             }
 
             var tab_segments = [];
             var tab_seg = [];
-            for (i in data.voices) {
+            for (i in data) {
                 tab_segments.push({
-                    startTime: getSeconds(data.voices[i].time),
-                    endTime: getSeconds(data.voices[i].end_time),
+                    startTime: getSeconds(data[i].time),
+                    endTime: getSeconds(data[i].end_time),
                     editable: false,
-                    color: data.voices[i].music ? '#195C84' : '#1FB671',
-                    labelText: data.voices[i].music ? '' : data.voices[i].voice,
-                    segmentInMarker: data.voices[i].music ? '#195C84' : '#1FB671',
-                    segmentOutMarker: data.voices[i].music ? '#195C84' : '#1FB671'
+                    color: data[i].music ? '#195C84' : '#1FB671',
+                    labelText: data[i].music ? '' : data[i].voice,
+                    segmentInMarker: data[i].music ? '#195C84' : '#1FB671',
+                    segmentOutMarker: data[i].music ? '#195C84' : '#1FB671'
                 });
             }
             var j = 0;
@@ -53,7 +69,7 @@ function initialize_peaks() {
                 if (i == 0) {
                     tab_seg.push(tab_segments[i]);
                 } else {
-                    if (data.voices[i].music && data.voices[i - 1].music) {
+                    if (data[i].music && data[i - 1].music) {
                         tab_seg[j].endTime = tab_segments[i].endTime;
                         tab_seg[j].labelText += ' ' + tab_segments[i].labelText;
                     } else {
@@ -66,7 +82,7 @@ function initialize_peaks() {
             var options = {
                 container: document.getElementById('peaks-container'),
                 mediaElement: document.querySelector('audio'),
-                audioContext: new AudioContext(),
+                audioContext: myAudioContext,
                 zoomLevels: [512, 1024, 2048, 4096],
                 // Colour for the zoomed in waveform
                 zoomWaveformColor: 'rgba(0, 225, 128, 1)',
@@ -135,10 +151,8 @@ function initialize_peaks() {
                 // do something when the waveform is displayed and ready
             });
         })(peaks);
-    }, 200);
+    }, 50);
 }
-
-initialize_peaks();
 
 function toggleMusic() {
     music_checked = !music_checked;
