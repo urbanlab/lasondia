@@ -1,17 +1,15 @@
 {
-  "fileName": "grosFichier.wav",
-  "voices": [
-    {
-      "music": "true",
-      "time": "00:00:00:000",
-      "voice": "None"
-    }
-  ],
-  "events": [
-    {
-      "time": "00:00:00:000",
-      "eventType": "event1",
-      "eventColor": "#FFFFFF"
-    }
-  ]
+    "fileName": "grosFichier.wav",
+    "date": "lundi 26/03/2018",
+    "voices": [{
+        "music": true,
+        "time": "00:00:00:000",
+        "end_time": "00:00:03:000",
+        "voice": "None"
+    }],
+    "events": [{
+        "time": "00:00:00:000",
+        "eventType": "event1",
+        "eventColor": "#FFFFFF"
+    }]
 }
