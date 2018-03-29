@@ -141,7 +141,4 @@ app.get('/*', function(req, res) {
     res.sendFile(__dirname + '/src/error404.html');
 });
 
-
-http.listen(8000, function(){
-  console.log('port 8000')
-});
+app.listen(8000)
