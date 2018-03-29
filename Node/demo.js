@@ -43,9 +43,9 @@ function sendRecordList(){
 	var liste_files = fs.readdirSync(testFolder);
 	for (var i = 0 ; i < liste_files.length ; i++) {
 		var res = testFolder.concat(String(liste_files[0]));
-	    var stats = fs.statSync(res);
+	  var stats = fs.statSync(res);
 		var mtime = stats.mtime;
-	    liste_dates.push(mtime);
+	  liste_dates.push(mtime);
 	};
 
 	var liste = [liste_files, liste_dates];
@@ -83,6 +83,14 @@ binaryServer.on('connection', function(client) {
             // Write JSON Events
             fs.writeFile(outFolder + '/events.json', JSON.stringify(eventsToJson));
             console.log('wrote to file ' + outFile);
+            var PythonShell = require('python-shell');
+            var options = {
+              scriptPath: __dirname + '/python_code',
+              args: ['fullRecord.wav',outFolder]
+            };
+            PythonShell.run('speechtotext.py',options, function (err,results) {
+              console.log('results: %j', results);
+            });
         });
     });
 });
