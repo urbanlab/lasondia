@@ -1,6 +1,11 @@
 @font-face {
-    font-family: 'OpenSanMed';
-    src: url('/fonts/VistaSans/VistaSanMed.ttf') format('ttf');
+    font-family: 'VistaSanMed';
+    src: url(../fonts/VistaSans/VistaSanMed.ttf);
+}
+
+@font-face {
+    font-family: 'OpenSan';
+    src: url(../fonts/OpenSans/OpenSans-Regular.ttf);
 }
 
 #title {
@@ -9,7 +14,7 @@
     margin-top: 0;
     font-size: 30px;
     font-weight: bold;
-    font-family: OpenSanMed;
+    font-family: "VistaSanMed";
     display: inline-block;
     margin-bottom: 140px;
 }
@@ -77,6 +82,7 @@ input:checked+.slider:before {
     color: #695B54;
     font-size: 25px;
     margin: 15px;
+    font-family: "OpenSan";
 }
 
 .checker_list {

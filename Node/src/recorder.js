@@ -99,7 +99,10 @@ function addGomette(numGomette){
     eventType:numGomette,
     eventSrc: src
   };
+
+  console.log('Adding gomette, client side', JSON.stringify(gomette));
   addRecord(numGomette);
+
   socket.emit('event', gomette);
 }
 
