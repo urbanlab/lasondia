@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
+<link rel="stylesheet" href="/src/style.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 ul {list-style-type: none;}
@@ -90,32 +92,11 @@ i.fa {
 </style>
 </head>
 <body class="w3-light-grey">
-
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-top w3-text-light-grey w3-large" style="z-index:3;width:250px;font-weight:bold;display:none;left:0;" id="mySidebar">
-  <a href="javascript:void()" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">FERMER</a>
-  <a href="#" onclick="location.href='/';" class="w3-bar-item w3-button w3-center w3-padding-16">MES COURS</a>
-  <a href="#about" onclick="location.href='progress';" class="w3-bar-item w3-button w3-center w3-padding-16">MA PROGRESSION</a>
-  <a href="#contact" onclick="location.href='record';" class="w3-bar-item w3-button w3-center w3-padding-16">ENREGISTREMENT</a>
-</nav>
-
-<!-- Top menu on small screens -->
-<header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
-    <a href="javascript:void(0)" class="w3-left w3-button w3-white" onclick="w3_open()">☰</a>
-  <span class="w3-left w3-padding">La SondIA</span>
-</header>
-
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
-
+<div id="nav-placeholder"></div>
+<div class="content">
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:0px;margin-top:50px;">
-
-  <!-- Header -->
-  <header class="w3-container" style="padding-top:22px">
-    <h5><b><i class="fa fa-dashboard"></i> Ma progression</b></h5>
-  </header>
 
   <div class="w3-row-padding w3-margin-bottom">
     <div class="w3-quarter">
@@ -244,6 +225,8 @@ function w3_close() {
     overlayBg.style.display = "none";
 }
 </script>
+<script src="/src/navbar_loader.js"></script>
 
+</div>
 </body>
 </html>
