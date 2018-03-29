@@ -107,6 +107,7 @@ function addGomette(numGomette){
 }
 
 function startRecordDisplay(){
+  document.getElementById("btnStartStop").disabled = true;
   startTime = Date.now();
 }
 function stopRecordDisplay(){
@@ -138,6 +139,9 @@ function draw() {
     text(duration.getMinutes() + ":" + duration.getSeconds() + " " + duration.getMilliseconds(), 0.5 * width, 0.75*height);
   }
 
+  if(duration.getSeconds() >= 18){
+    document.getElementById("btnStartStop").disabled = false;
+  }
 }
 
 function drawTimeline(){

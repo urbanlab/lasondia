@@ -71,6 +71,9 @@ binaryServer.on('connection', function(client) {
 
     client.on('stream', function(stream, meta) {
 
+        // Erase gommetttes
+        eventsToJson = [];
+
         // New directory with any new stream
         var tmpobj = tmp.dirSync({ template: './records/record-XXXXXX' });
         outFolder = tmpobj.name;
@@ -82,7 +85,7 @@ binaryServer.on('connection', function(client) {
 
         var fileWriter = new wav.FileWriter(outFile, {
             channels: 1,
-            sampleRate: 48000,
+            sampleRate: 44100,
             bitDepth: 16
         });
 
