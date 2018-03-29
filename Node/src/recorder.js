@@ -69,10 +69,35 @@ function addRecord(numGomette){
 }
 
 function addGomette(numGomette){
+
+  var src;
+  switch (numGomette) {
+    case 1:
+    src = '/images/Gommettes/SansOmbre/08.png';
+    break;
+    case 2:
+    src = '/images/Gommettes/SansOmbre/09.png';
+    break;
+    case 3:
+    src = '/images/Gommettes/SansOmbre/10.png';
+    break;
+    case 4:
+    src = '/images/Gommettes/SansOmbre/11.png';
+    break;
+    case 5:
+    src = '/images/Gommettes/SansOmbre/12.png';
+    break;
+    case 6:
+    src = '/images/Gommettes/SansOmbre/30.png';
+    break;
+    default:
+    src = 'no path available';
+  }
+
   var gomette = {
     time:duration.getMinutes() + ":" + duration.getSeconds() + ":" + duration.getMilliseconds(),
     eventType:numGomette,
-    color:"#FB4807"
+    eventSrc: src
   };
   addRecord(numGomette);
   socket.emit('event', gomette);

@@ -2,7 +2,7 @@
 var liveVolume;
 
 (function(window) {
-  var client = new BinaryClient('ws://192.168.81.109:9001');
+  var client = new BinaryClient('ws://localhost:9001');
 
 
   client.on('open', function() {

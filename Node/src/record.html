@@ -18,7 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 
   <script>
-  var socket = io('http://192.168.81.109:8000/');
+    var socket = io('http://localhost:8000/');
   </script>
   <!-- Actions Boutons-->
   <script>
@@ -39,22 +39,34 @@
 
     // Ajout de gommette
     $("#btnGommette1").click(function() {
-      addGomette(1);
+      if (record == true) {
+        addGomette(1);
+      }
     });
     $("#btnGommette2").click(function() {
-      addGomette(2);
+      if (record == true) {
+        addGomette(2);
+      }
     });
     $("#btnGommette3").click(function() {
-      addGomette(3);
+      if (record == true) {
+        addGomette(3);
+      }
     });
     $("#btnGommette4").click(function() {
-      addGomette(4);
+      if (record == true) {
+        addGomette(4);
+      }
     });
     $("#btnGommette5").click(function() {
-      addGomette(5);
+      if (record == true) {
+        addGomette(5);
+      }
     });
     $("#btnGommette6").click(function() {
-      addGomette(6);
+      if (record == true) {
+        addGomette(6);
+      }
     });
   });
   </script>
