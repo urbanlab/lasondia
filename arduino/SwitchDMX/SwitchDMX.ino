@@ -32,10 +32,12 @@ void loop() {
 
 void switchLight(){
   if(room){
-    Serial.println("Allumage Appartement");
+    // Allumage Appartement -------------------------------;
+    Serial.println("A");
     room = false;
   } else {
-    Serial.println("Allumage Salle de cours");
+    // Allumage Salle de cours ----------------------------;
+    Serial.println("S");
     room = true;
   }
 }
