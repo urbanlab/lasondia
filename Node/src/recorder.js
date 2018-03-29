@@ -18,6 +18,8 @@ function preload() {
   gomette6 = loadImage('../images/Gommettes/SansOmbre/30.png');
 }
 
+var currentTime, startTime, duration;
+
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
@@ -34,6 +36,9 @@ function setup() {
   for (i = 0; i < max; i++) {
     addRecord(0);
   }
+
+  currentTime = new Date();
+  startTime = new Date();
 
 }
 
@@ -64,27 +69,51 @@ function addRecord(numGomette){
 }
 
 function addGomette(numGomette){
-  var gomette = {time:new Date(), eventType:numGomette, color:"#FB4807"};
+  var gomette = {
+    time:duration.getMinutes() + ":" + duration.getSeconds() + ":" + duration.getMilliseconds(),
+    eventType:numGomette,
+    color:"#FB4807"
+  };
   addRecord(numGomette);
   socket.emit('event', gomette);
+}
+
+function startRecordDisplay(){
+  startTime = Date.now();
+}
+function stopRecordDisplay(){
+
 }
 
 function draw() {
 
   background(255);
 
+  currentTime = Date.now();
+
   if(record == true){
     fill(100, 100, 200, 50);
+    duration = new Date(currentTime - startTime);
   }else{
     fill(100, 100, 100, 50);
+    duration = new Date(currentTime - currentTime);
   }
 
   addRecord(0);
   drawTimeline();
   drawGommettes();
+
+  if(record == true){
+    // Draw Timer
+    textAlign(CENTER);
+    textSize(64);
+    text(duration.getMinutes() + ":" + duration.getSeconds() + " " + duration.getMilliseconds(), 0.5 * width, 0.75*height);
+  }
+
 }
 
 function drawTimeline(){
+
   var len = gommettes.length;
   for (i = 0; i < len; i++) {
 
@@ -95,6 +124,9 @@ function drawTimeline(){
     var realSize = map(gommettes[i].volume, 0, 0.01, 5, 200, true);
     ellipse(posX, posY, realSize, realSize);
   }
+
+  //line(0.5 * width, 0, 0.5 * width, height);
+
 }
 
 function drawGommettes(){
@@ -104,7 +136,7 @@ function drawGommettes(){
   for (i = 0; i < len; i++) {
 
     var posX = width - len*gommettesStep + i*gommettesStep;
-    var posY = 0.75*height;
+    var posY = 0.7*height;
 
 
     switch (gommettes[i].num) {
