@@ -1,3 +1,6 @@
+import interfascia.*;
+
+
 import dmxP512.*;
 import processing.serial.*;
 
@@ -6,12 +9,17 @@ DmxP512 dmxOutput;
 int universeSize=128;
 
 // MAC PORT
-String DMXPRO_PORT="/dev/tty.usbserial-EN160112";//case matters ! on windows port must be upper cased.
+//String DMXPRO_PORT="/dev/tty.usbserial-EN160112";//case matters ! on windows port must be upper cased.
 // LINUX PORT
-//String DMXPRO_PORT="/dev/ttyUSB0";
+String DMXPRO_PORT="/dev/ttyUSB0";
 int DMXPRO_BAUDRATE=115000;
 
-String ARD_PORT="/dev/cu.SLAB_USBtoUART";//case matters ! on windows port must be upper cased.
+// MAC PORT
+//String ARD_PORT="/dev/cu.SLAB_USBtoUART";//case matters ! on windows port must be upper cased.
+// LINUX PORT
+String ARD_PORT="/dev/ttyUSB1";
+int ARD_BAUDRATE=9600;
+
 Serial btnPort;  // Create object from Serial class
 char btnValue;      // Data received from the serial port
 
@@ -19,6 +27,11 @@ float realBrightAppart, realBrightCours;
 float comdBrightAppart, comdBrightCours;
 int sensBrightAppart, sensBrightCours;
 float timeAppart, timeCours;
+int maxBrightness;
+
+GUIController c;
+IFTextField t;
+IFLabel lName,lValue;
 
 void setup() {
   size(600, 400);
@@ -33,10 +46,22 @@ void setup() {
   btnPort = new Serial(this, ARD_PORT, 9600);
   
   dmxOutput=new DmxP512(this,universeSize,false);
-  //dmxOutput.setupDmxPro(DMXPRO_PORT,DMXPRO_BAUDRATE);
+  dmxOutput.setupDmxPro(DMXPRO_PORT,DMXPRO_BAUDRATE);
   
   timeCours = millis();
   sensBrightCours = 1;
+  maxBrightness = 100;
+  
+  c = new GUIController(this);
+  t = new IFTextField("Text Field", 25, 170, 150);
+  lName = new IFLabel("max. brightness : ", 25, 155);
+  lValue = new IFLabel("", 100, 155);
+  
+  c.add(t);
+  c.add(lName);
+  c.add(lValue);
+  
+  t.addActionListener(this);
   
 }      
 
@@ -44,6 +69,8 @@ void draw() {
   
   background(150);
   fill(230);
+  
+  lValue.setLabel(str(maxBrightness));
   
   if ( btnPort.available() > 0) {  // If data is available,
     changeMode(btnPort.readChar());
@@ -62,10 +89,10 @@ void draw() {
     comdBrightCours = 0.0;
   }
   if(sensBrightCours == 1){
-    realBrightCours = comdBrightCours * 255;
+    realBrightCours = comdBrightCours * maxBrightness;
   }  
   if(sensBrightCours == -1){
-    realBrightCours = (1.0 - comdBrightCours) * 255;
+    realBrightCours = (1.0 - comdBrightCours) * maxBrightness;
   }  
   // APPART --------------------------------------
   comdBrightAppart = (millis() - timeAppart) / period;
@@ -76,10 +103,10 @@ void draw() {
     comdBrightAppart = 0.0;
   }
   if(sensBrightAppart == 1){
-    realBrightAppart = comdBrightAppart * 255;
+    realBrightAppart = comdBrightAppart * maxBrightness;
   }  
   if(sensBrightAppart == -1){
-    realBrightAppart = (1.0 - comdBrightAppart) * 255;
+    realBrightAppart = (1.0 - comdBrightAppart) * maxBrightness;
   }  
   
   //println("Cours : " + realBrightCours + " , Appart : " + realBrightAppart);
@@ -96,9 +123,9 @@ void draw() {
   text("Appart", 350, 50);
   triangle(350, 50, 250, 350, 450, 350);
   
-  dmxOutput.set(1,100);
-  dmxOutput.set(2,100);
-  dmxOutput.set(3,100);
+  dmxOutput.set(1,int(0.5*realBrightAppart + 0.5*realBrightCours));
+  dmxOutput.set(2,int(realBrightAppart));
+  dmxOutput.set(3,int(realBrightCours));
   
 }
 
@@ -121,4 +148,10 @@ void changeMode(char mode){
       sensBrightCours = 1;
       sensBrightAppart = -1;
     }
+}
+
+void actionPerformed(GUIEvent e) {
+  if (e.getMessage().equals("Completed")) {
+    maxBrightness = Integer.parseInt(t.getValue());
+  }
 }
