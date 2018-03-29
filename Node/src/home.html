@@ -8,48 +8,15 @@
     <title>Home</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-    <style>
-        body,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5 {
-            font-family: "Raleway", sans-serif
-        }
-
-        .w3-quarter img {
-            margin-bottom: -6px;
-            cursor: pointer
-        }
-
-        .w3-quarter img:hover {
-            opacity: 0.6;
-            transition: 0.3s
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 
 <body class="w3-light-grey">
+  <div id="nav-placeholder"></div>
 
-    <!-- Sidebar/menu -->
-    <nav class="w3-sidebar w3-bar-block w3-black w3-animate-left w3-top w3-text-light-grey w3-large" style="z-index:3;width:250px;font-weight:bold;display:none;left:0;" id="mySidebar">
-        <a href="javascript:void()" onclick="w3_close()" class="w3-bar-item w3-button w3-center w3-padding-32">FERMER</a>
-        <a href="#" onclick="location.href='/';" class="w3-bar-item w3-button w3-center w3-padding-16">MES COURS</a>
-        <a href="#about" onclick="location.href='progress';" class="w3-bar-item w3-button w3-center w3-padding-16">MA PROGRESSION</a>
-        <a href="#contact" onclick="location.href='record';" class="w3-bar-item w3-button w3-center w3-padding-16">ENREGISTREMENT</a>
-    </nav>
-
-    <!-- Top menu on small screens -->
-    <header class="w3-container w3-top w3-white w3-xlarge w3-padding-16">
-        <a href="javascript:void(0)" class="w3-left w3-button w3-white" onclick="w3_open()">☰</a>
-        <span class="w3-left w3-padding">La SondIA</span>
-    </header>
-
-    <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- !PAGE CONTENT! -->
+    <div class="content">
     <div class="w3-main w3-content records-list-container" style="max-width:1600px;margin-top:83px">
 
         <!-- Enregistrements -->
@@ -104,15 +71,7 @@
         </div>
     </footer>
 
-
-
-    <!-- End page content -->
-    <div class="w3-black w3-center w3-padding-24">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></div>
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
     <script>
     var socket = io('http://192.168.81.109:8000/');
 
@@ -155,6 +114,8 @@
             captionText.innerHTML = element.alt;
         }
     </script>
+    <script src="/src/navbar_loader.js"></script>
+    </div>
 </body>
 
 </html>
