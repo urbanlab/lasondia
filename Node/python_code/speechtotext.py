@@ -12,6 +12,7 @@ from pydub import AudioSegment
 from cutter import cutter
 import numpy as np
 
+
 # Imports the Google Cloud client library
 from google.cloud import speech
 from google.cloud.speech import enums
@@ -75,20 +76,25 @@ def analyse(file_name,file_path=os.getcwd()):
 os.chdir(sys.argv[2])
 output = analyse(sys.argv[1], sys.argv[2])
 os.chdir(os.path.normpath(os.getcwd() + os.sep + os.pardir))
-data = [output[0][0][:-9]]
+data = []
 for i in range(len(output)):
     if output[i][1] == None:
         data.append({
        'music' : True,
        'time' : str(datetime.timedelta(seconds=i*3)),
-       'text' : None
+       'voice' : None,
+       'end_time' : str(datetime.timedelta(seconds=(i+1)*3))
         })
     else:
         data.append({
        'music' : False,
        'time' : str(datetime.timedelta(seconds=i*3)),
-       'text' : output[i][1]
+       'voice' : output[i][1],
+       'end_time' : str(datetime.timedelta(seconds=(i+1)*3))
         })
+date = {'date' : datetime.datetime.now().strftime("%a %d/%m/%Y %H:%M")}
 json_name = output[0][0][:-9] + '_voices.json'
 with open(json_name, 'w') as f:
-    json.dump(data, f, indent=4, sort_keys=True, ensure_ascii=False)
+    json.dump(data, f, indent=4, sort_keys=False, ensure_ascii=False)
+with open('date', 'w') as f:
+    json.dump(date, f, indent=4, sort_keys=False, ensure_ascii=False)

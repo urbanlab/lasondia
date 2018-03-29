@@ -10,13 +10,15 @@ function readTextFile(file, callback) {
     rawFile.send(null);
 }
 
+var recordId = window.location.hash.substr(1, window.location.hash.length);
+
 var data
 var music_checked = true
 var voice_checked = true
 var label_checked = true
 var p
 
-readTextFile("/src/to_test.json", function(text) {
+readTextFile("/records/"+recordId+"/fullRecord_voices.json", function(text) {
     data = JSON.parse(text);
     //$('#create_audio').html("<audio controls autoplay id=\"audio\"><source src=\"" + data.fileName + "\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");
     $('#create_audio').html("<audio controls id=\"audio\"><source src=\"" + data.fileName + "\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");

@@ -17,15 +17,29 @@ var wav = require('wav');
 var port = 3700;
 
 var eventsToJson = [];
-var recordsToJSON = []
+var recordsToJSON = [];
+var records = [];
 
 // Socket section
-io.sockets.on('connection', newConnection);
+io.on('connection', newConnection);
 
 function newConnection(socket){
   console.log("New socket connection: " + socket.id);
   socket.on('event', newGommette);
-  socket.on('recordList', sendRecordList);
+//  socket.on('recordList', sendRecordList);
+  socket.on('askRecord', function(data) {
+    sendRecordList();
+
+    var recordId = data.recordSlug.substr(1,data.recordSlug.length);
+    console.log(recordId);
+
+
+
+  });
+
+  sendRecordList();
+
+  socket.emit('recordList', { recordList: records });
 }
 
 function newGommette(gommetteDatas) {
@@ -34,8 +48,8 @@ function newGommette(gommetteDatas) {
 }
 
 function sendRecordList(){
-    // Lire le répertoire
-    var recordsToJSON = []
+  // Lire le répertoire
+  recordsToJSON = []
 	var liste_dates = []
 	// Lire le répertoire
 	const testFolder = String(process.cwd()).concat('/records/');
@@ -49,8 +63,9 @@ function sendRecordList(){
 	};
 
 	var liste = [liste_files, liste_dates];
-	var recordsToJSON = JSON.stringify(liste);
-	}
+	recordsToJSON = JSON.stringify(liste);
+	records = liste;
+}
 
 binaryServer = BinaryServer({port: 9001});
 binaryServer.on('connection', function(client) {
@@ -100,6 +115,7 @@ app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use('/images', express.static(__dirname + '/images'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/fonts', express.static(__dirname + '/fonts'));
+app.use('/records', express.static(__dirname + '/records'));
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/src/home.html');
@@ -112,10 +128,10 @@ app.get('/record', function(req, res) {
 app.get('/analysis', function(req, res) {
     res.sendFile(__dirname + '/src/analysis.html');
 });
-
-app.get('/home', function(req, res) {
-    res.sendfile(__dirname + '/src/home.html');
-});
+//
+// app.get('/analysis/:recordslug', function(req, res) {
+//     res.sendFile(__dirname + '/src/analysis.html'); // ?record='+req.params.recordslug
+// });
 
 app.get('/progress', function(req, res) {
     res.sendfile(__dirname + '/src/progress.html');
@@ -126,4 +142,6 @@ app.get('/*', function(req, res) {
 });
 
 
-app.listen(8000);
+http.listen(8000, function(){
+  console.log('port 8000')
+});
