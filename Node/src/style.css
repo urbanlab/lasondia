@@ -19,3 +19,18 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
+
+.records-list-container div{
+    display: inline-block;
+    margin: 10px;
+    width: 30%;
+    }
+
+.image_list {
+    margin: auto;
+    position: relative;
+}    
+.records-list-container div a{
+    display: block;
+    text-align: center;
+}
