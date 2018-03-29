@@ -22,3 +22,15 @@ function tryHidingMenu() {
         toggleMenu();
     }
 }
+
+function goToMyLessons() {
+    window.location.href = '';
+}
+
+function goToMyProgress() {
+    window.location.href = '';
+}
+
+function goToRegister() {
+    window.location.href = '';
+}

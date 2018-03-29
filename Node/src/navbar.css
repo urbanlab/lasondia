@@ -36,4 +36,6 @@ body {
     color: #1FB570;
     font-size: 30px;
     padding: 14px 0;
+    display: block;
+    text-decoration: none;
 }
