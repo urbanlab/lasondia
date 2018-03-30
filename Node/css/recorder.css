@@ -37,10 +37,9 @@
 }
 .startStopGroup {
   position: absolute;
-  width: 60px;
+  width: 180px;
   height: 34px;
   top: 5%;
-  left: 85%;
   right: 0;
   bottom: 0;
 }
