@@ -106,44 +106,44 @@ input:checked + .slider:before {
 
 }
 .gomettes {
-  width:93px;
-  height:102px;
+  width:55px;
+  height:65px;
   margin-left: 20px;
   margin-right: 20px;
 }
 .gomette1 {
   background: url('../images/Gommettes/AvecOmbre/08.png');
-  background-size: 70px 76px;
+  background-size: 70%;
   background-position:center;
   background-repeat: no-repeat;
 }
 .gomette2 {
   background: url('../images/Gommettes/AvecOmbre/09.png');
-  background-size: 70px 76px;
+  background-size: 70%;
   background-position:center;
   background-repeat: no-repeat;
 }
 .gomette3 {
   background: url('../images/Gommettes/AvecOmbre/10.png');
-  background-size: 70px 76px;
+  background-size: 70%;
   background-position:center;
   background-repeat: no-repeat;
 }
 .gomette4 {
   background: url('../images/Gommettes/AvecOmbre/11.png');
-  background-size: 70px 76px;
+  background-size: 70%;
   background-position:center;
   background-repeat: no-repeat;
 }
 .gomette5 {
   background: url('../images/Gommettes/AvecOmbre/12.png');
-  background-size: 70px 76px;
+  background-size: 70%;
   background-position:center;
   background-repeat: no-repeat;
 }
 .gomette6 {
   background: url('../images/Gommettes/AvecOmbre/30.png');
-  background-size: 70px 76px;
+  background-size: 70%;
   background-position:center;
   background-repeat: no-repeat;
 }
@@ -176,13 +176,12 @@ input:checked + .slider:before {
 .colorGroup {
   /* background-image: url('../images/menu-toggle-bas-full-51.png'); */
 
-  float: left;
-
-  position: absolute;
-  top: 30%;
-  left: 0;
-  right: 0;
-  bottom: 0; */
+  position: relative;
+  top: 25%;
+  left: 50%;
+  bottom: 0;
+  display: inline-block;
+  transform: translateX(-50%);
 
 }
 
