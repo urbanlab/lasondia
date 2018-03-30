@@ -122,7 +122,7 @@
           var frenchDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
           var french = frenchDays[days.indexOf(date.substr(0, 3))];
           var final = french + " " + date.substr(4, date.length)
-          $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a style="text-decoration:none;" href="/analysis#'+finalList[i].record+'">'+final+'</a><a href="/analysis#'+recordsList[i]+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
+          $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a style="text-decoration:none;" href="/analysis#'+finalList[i].record+'">'+final+'</a><a href="/analysis#'+finalList[i].record+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
         });
       }
     }

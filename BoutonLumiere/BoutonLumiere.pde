@@ -17,7 +17,7 @@ int DMXPRO_BAUDRATE=115000;
 // MAC PORT
 //String ARD_PORT="/dev/cu.SLAB_USBtoUART";//case matters ! on windows port must be upper cased.
 // LINUX PORT
-String ARD_PORT="/dev/ttyUSB2";
+String ARD_PORT="/dev/ttyUSB1";
 int ARD_BAUDRATE=9600;
 
 Serial btnPort;  // Create object from Serial class
@@ -27,11 +27,12 @@ float realBrightAppart, realBrightCours;
 float comdBrightAppart, comdBrightCours;
 int sensBrightAppart, sensBrightCours;
 float timeAppart, timeCours;
-int maxBrightness;
+int maxBrightnessA, maxBrightnessS;
 
 GUIController c;
-IFTextField t;
-IFLabel lName,lValue;
+IFTextField tA, tS;
+IFLabel lNameA,lValueA;
+IFLabel lNameS,lValueS;
 
 void setup() {
   size(600, 400);
@@ -50,18 +51,27 @@ void setup() {
   
   timeCours = millis();
   sensBrightCours = 1;
-  maxBrightness = 100;
+  maxBrightnessA = 100;
+  maxBrightnessS = 100;
   
   c = new GUIController(this);
-  t = new IFTextField("Text Field", 25, 170, 150);
-  lName = new IFLabel("max. brightness : ", 25, 155);
-  lValue = new IFLabel("", 125, 155);
+  tA = new IFTextField("Text Field", 25, 170, 150);
+   lNameA = new IFLabel("max. brightness gauche : ", 25, 155);
+  lValueA = new IFLabel("", 125, 155);
   
-  c.add(t);
-  c.add(lName);
-  c.add(lValue);
+   tS = new IFTextField("Text Field", 25, 215, 195);
+lNameS = new IFLabel("max. brightness droite : ", 25, 200);
+  lValueS = new IFLabel("", 125, 200);
   
-  t.addActionListener(this);
+  c.add(tA);
+  c.add(tS);
+  c.add(lNameA);
+  c.add(lValueA);
+  c.add(lNameS);
+  c.add(lValueS);
+  
+  tA.addActionListener(this);
+  tS.addActionListener(this);
   
 }      
 
@@ -70,7 +80,8 @@ void draw() {
   background(150);
   fill(230);
   
-  lValue.setLabel(str(maxBrightness));
+  lValueA.setLabel(str(maxBrightnessA));
+  lValueS.setLabel(str(maxBrightnessS));
   
   if ( btnPort.available() > 0) {  // If data is available,
     changeMode(btnPort.readChar());
@@ -89,10 +100,10 @@ void draw() {
     comdBrightCours = 0.0;
   }
   if(sensBrightCours == 1){
-    realBrightCours = comdBrightCours * maxBrightness;
+    realBrightCours = comdBrightCours * maxBrightnessS;
   }  
   if(sensBrightCours == -1){
-    realBrightCours = (1.0 - comdBrightCours) * maxBrightness;
+    realBrightCours = (1.0 - comdBrightCours) * maxBrightnessS;
   }  
   // APPART --------------------------------------
   comdBrightAppart = (millis() - timeAppart) / period;
@@ -103,10 +114,10 @@ void draw() {
     comdBrightAppart = 0.0;
   }
   if(sensBrightAppart == 1){
-    realBrightAppart = comdBrightAppart * maxBrightness;
+    realBrightAppart = comdBrightAppart * maxBrightnessA;
   }  
   if(sensBrightAppart == -1){
-    realBrightAppart = (1.0 - comdBrightAppart) * maxBrightness;
+    realBrightAppart = (1.0 - comdBrightAppart) * maxBrightnessA;
   }  
   
   //println("Cours : " + realBrightCours + " , Appart : " + realBrightAppart);
@@ -152,6 +163,7 @@ void changeMode(char mode){
 
 void actionPerformed(GUIEvent e) {
   if (e.getMessage().equals("Completed")) {
-    maxBrightness = Integer.parseInt(t.getValue());
+    maxBrightnessA = Integer.parseInt(tA.getValue());
+    maxBrightnessS = Integer.parseInt(tS.getValue());
   }
 }

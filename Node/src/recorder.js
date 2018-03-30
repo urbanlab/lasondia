@@ -150,10 +150,10 @@ function drawTimeline(){
   for (i = 0; i < len; i++) {
 
     var posX = width - len*gommettesStep + i*gommettesStep;
-    var posY = 0.5*height;
+    var posY = 0.4*height;
 
     //console.log("Volume is : ", gommettesVolume[i]);
-    var realSize = map(gommettes[i].volume, 0, 0.01, 5, 200, true);
+    var realSize = map(gommettes[i].volume, 0, 0.01, 5, 100, true);
     ellipse(posX, posY, realSize, realSize);
   }
 
@@ -168,27 +168,27 @@ function drawGommettes(){
   for (i = 0; i < len; i++) {
 
     var posX = width - len*gommettesStep + i*gommettesStep;
-    var posY = 0.7*height;
+    var posY = 0.5*height;
 
 
     switch (gommettes[i].num) {
       case 1:
-      image(gomette1, posX, posY, 25, 25);
+      image(gomette1, posX, posY, 25, 40);
       break;
       case 2:
-      image(gomette2, posX, posY, 25, 25);
+      image(gomette2, posX, posY, 25, 40);
       break;
       case 3:
-      image(gomette3, posX, posY, 25, 25);
+      image(gomette3, posX, posY, 25, 40);
       break;
       case 4:
-      image(gomette4, posX, posY, 25, 25);
+      image(gomette4, posX, posY, 25, 40);
       break;
       case 5:
-      image(gomette5, posX, posY, 25, 25);
+      image(gomette5, posX, posY, 25, 40);
       break;
       case 6:
-      image(gomette6, posX, posY, 25, 25);
+      image(gomette6, posX, posY, 25, 40);
       break;
       default:
       // No image
