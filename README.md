@@ -66,6 +66,9 @@ Inspired by lesondier (http://www.lesondier.com/) and its sondbox
 - Theo Ferreira (Epitech) @theo-hubgrade
 - Zoé Paille (DSAA) @Troiscentdeux
 - Sébastien Albert (Studio Albert) @DudleySmith
+- Victor Lévêque (DSAA)
+- Léa Carles (DSAA)
+- Angélique Giannini (DSAA)
 
 ### Basic Steps and features
 - Recording music lessons while teacher can augment with notes
