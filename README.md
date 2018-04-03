@@ -55,9 +55,9 @@ https://github.com/processing/p5.js/issues/2726#issuecomment-375837110
 
 [EN version]
 # lasondia
-## Sound Analysis for Music Teachers
+## Sound Analysis for Music Lessons
 
-Made for IA Workshop (2018 - Lyon , France) organized by : @urbanlab (https://github.com/urbanlab) *+* DSAA Villefontaine
+Made during AI Workshop (2018 - Lyon , France) organized by : @urbanlab (https://github.com/urbanlab) *+* DSAA Villefontaine
 
 Inspired by lesondier (http://www.lesondier.com/) and its sondbox
 
