@@ -41,7 +41,7 @@ https://github.com/processing/p5.js/issues/2726#issuecomment-375837110
 - /usr/share/processing/processing-3.3.7/processing ./BoutonLumiere/BoutonLumiere.pde
 - Then click on the start button and verify that the ligths are working properly
 - Then enter the following :
-- export GOOGLE_APPLICATION_CREDENTIALS="/home/erasme/lasondia/Node/googlecredentials.json"
+- export GOOGLE_APPLICATION_CREDENTIALS="./Node/googlecredentials.json"
 - Verify IP address for the sockets
 - Finally start the server with this command :
 - node ./Node/demo.js
