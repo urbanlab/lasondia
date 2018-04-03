@@ -4,3 +4,7 @@
 #ignoring node modules
 /Node/node_modules
 /Node/records/record-*
+
+#ignoring google keys
+/Node/googlecredentials.json
+/Node/googlekey.json
