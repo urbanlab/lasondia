@@ -153,7 +153,7 @@ function drawTimeline(){
     var posY = 0.4*height;
 
     //console.log("Volume is : ", gommettesVolume[i]);
-    var realSize = map(gommettes[i].volume, 0, 0.01, 5, 100, true);
+    var realSize = map(gommettes[i].volume, 0, 0.08, 5, 100, true);
     ellipse(posX, posY, realSize, realSize);
   }
 
