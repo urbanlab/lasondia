@@ -50,6 +50,7 @@ var loop_colors = {};
 //-------------------------------------------------------------------------------------------------------------
 
 function get_record_title(date) {
+    // Generate the title at the top of the page when the server sends the recording's date
     var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     var frenchDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
     var french = frenchDays[days.indexOf(date.substr(0, 3))];
@@ -58,7 +59,15 @@ function get_record_title(date) {
 }
 
 function initialize_counters() {
+    // When the gommettes and loop segments are loaded, we have to update nb_segments_created and
+    // nb_gommettes_created to prevent id conflicts when new loops/gommettes are created
+    var gommette_ids = p.get_gommettes().map((g) => g.id).filter((id) => id.includes('User-created gommette'));
+    var gommettes_numbers = gommette_ids.map((id) => parseInt(id.split(' ')[2]));
+    nb_gommettes_created = Math.max(0, Math.max.apply([], gommettes_numbers));
 
+    var loop_ids = p.get_segments().map((s) => s.id).filter((id) => id.includes('loop_'));
+    var loop_numbers = loop_ids.map((id) => parseInt(id.split('_'))[1]);
+    nb_segments_created = Math.max(0, Math.max.apply([], loop_numbers));
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -77,18 +86,13 @@ window.onload = function() {
         background_segment_list = data.segments;
 
         $('title').html(get_record_title(date));
-        $('#create_audio').html("<audio onloadeddata=\"initialize_peaks()\" preload=\"true\" controls id=\"audio\"><source src=\"" + path + "fullRecord.wav\" id=\"audio_source\" type=\"audio/wav\"></audio><script src=\"/node_modules/peaks.js/peaks.js\"></script>");
+        $('#create_audio').html(
+            "<audio onloadeddata=\"initialize_peaks()\" preload=\"true\" controls id=\"audio\">\
+                <source src=\"" + path + "fullRecord.wav\" id=\"audio_source\" type=\"audio/wav\"> \
+             </audio> \
+             <script src=\"/node_modules/peaks.js/peaks.js\"></script>"
+        );
     })
-}
-
-function initialize_counters() {
-    var gommette_ids = p.get_gommettes().map((g) => g.id).filter((id) => id.includes('User-created gommette'));
-    var gommettes_numbers = gommette_ids.map((id) => parseInt(id.split(' ')[2]));
-    nb_gommettes_created = Math.max(0, Math.max.apply([], gommettes_numbers));
-
-    var loop_ids = p.get_segments().map((s) => s.id).filter((id) => id.includes('loop_'));
-    var loop_numbers = loop_ids.map((id) => parseInt(id.split('_'))[1]);
-    nb_segments_created = Math.max(0, Math.max.apply([], loop_numbers));
 }
 
 //-------------------------------------------------------------------------------------------------------------
@@ -198,7 +202,7 @@ function initialize_peaks() {
         // And then we set the page contents to 'visible' (we also initialize the listen loop, see its definition for more precisions)
         audio_duration = $('audio')[0].duration;
         initialize_menus();
-        p.listenLoop(0, null, 0.050);
+        p.listenLoop(0, null, 0.025);
     }, 50);
 
 }
@@ -381,7 +385,7 @@ function add_custom_methods(p) {
         // Returns the time segment (potentially null) which contains the date 'time'
         var segment_list = this.get_segments();
         for(const segment of segment_list) {
-            if(time >= segment.startTime && time <= segment.endTime) {
+            if(time >= segment.startTime && time < segment.endTime) {
                 return segment;
             };
         };
@@ -394,8 +398,8 @@ function add_custom_methods(p) {
         if(app_mode == 'listen') {
             var current_time = this.player.getCurrentTime();
             var current_segment = this.get_context_segment(current_time);
-            if(listen_mode == 'loop') {
-                if (current_time >=  previous_time && (current_time - previous_time) <= 2 * loop_time) { // if the reading head wasn't moved manually
+            if(listen_mode == 'loop' && !($('audio')[0].paused)) {
+                if (current_time >=  previous_time && (current_time - previous_time) <= 0.1) { // if the reading head wasn't moved manually
                     if (previous_segment != null && !are_equal(current_segment, previous_segment)) {     // and it arrives at the end of a segment
                         this.player.seek(previous_segment.startTime);                                    // then loop
                         current_segment = previous_segment;
@@ -441,6 +445,45 @@ function intersection_is_empty(segment_list) {
         }
     }
     return true;
+}
+
+function get_index_of(x, sorted_list) {
+    // Get the index of the number x in the sorted list sorted_list.
+    // Uses tolerances (cf. infra)
+    // Example (list = [a, b, c, d] with a < b < c < d):
+    //
+    // Index returned:  -0.5   0   0.5  1   1.5  2   2.5  3   3.5
+    // x             : --------|--------|--------|--------|-------->
+    // List elements :         a        b        c        d
+    if(includes_with_tolerance(sorted_list, x)) {
+        return indexOf_with_tolerance(sorted_list, x);
+    } else {
+        var list_length = sorted_list.length;
+        var index = -0.5;
+        for(var i=0; i < list_length; i++) {
+            if(x < sorted_list[i]) {
+                return index;
+            } else {
+                index += 1
+            }
+        };
+        return index;
+    }
+}
+
+function indexOf_with_tolerance(list, x, tolerance=0.001) {
+    // Equivalent to list.indexOf(x). Must be used in case of
+    // value errors taht result of floating point operations
+    for(var i=0; i < list.length; i++) {
+        if(Math.abs(x - list[i]) < tolerance) {return i};
+    };
+    return -1;
+}
+
+function includes_with_tolerance(list, x, tolerance = 0.001) {
+    // Equivalent to list.includes(x). Must be used in case of
+    // value errors taht result of floating point operations
+    return (indexOf_with_tolerance(list, x, tolerance) != -1);
 }
 
 function random_color() {
@@ -568,34 +611,37 @@ function previous_landmark() {
     // Reach the previous loop segment beginning /end, or the previous gommette
     var landmarks = p.get_landmarks();
     var currentTime = p.player.getCurrentTime();
-    var currentTimeIndex = -1;
-    var landmarks_number = landmarks.length;
-    if(currentTime == 0) {
-        return
+    var currentTimeIndex;
+    if(includes_with_tolerance(landmarks, currentTime - 0.01)) {
+        currentTimeIndex = indexOf_with_tolerance(landmarks, currentTime - 0.01);
     } else {
-        currentTime = Math.max(0, currentTime - 0.01); // without this line, the added reading head translation in next_landmark will make previous_landmark move the reading head by 0.01s only
-        for(var i=0; i<landmarks_number; i++) {
-            if(currentTime > landmarks[i]) {currentTimeIndex++} else {break};
-        };
-        var new_time = landmarks[currentTimeIndex];
-        p.player.seek(new_time);
+        currentTimeIndex = get_index_of(currentTime, landmarks);
+    };
+    if(currentTimeIndex <= 0) {
+        p.player.seek(0);
+    } else if(Number.isInteger(currentTimeIndex)) {
+        p.player.seek(landmarks[currentTimeIndex - 1] + 0.01);
+    } else {
+        p.player.seek(landmarks[Math.floor(currentTimeIndex)] + 0.01);
     }
 }
 
+
 function next_landmark() {
-    // Reach the next loop segment beginning /end, or the next gommette
+    // // Reach the next loop segment beginning /end, or the next gommette
     var landmarks = p.get_landmarks();
     var currentTime = p.player.getCurrentTime();
-    var currentTimeIndex = 0;
-    var landmarks_number = landmarks.length;
-    if(currentTime >= landmarks[landmarks_number - 1]) {
-        return
+    if(includes_with_tolerance(landmarks, currentTime - 0.01)) {
+        currentTimeIndex = indexOf_with_tolerance(landmarks, currentTime - 0.01);
     } else {
-        for(var i=0; i<landmarks_number; i++) {
-            if(currentTime >= landmarks[i]) {currentTimeIndex++} else {break};
-        };
-        var new_time = landmarks[currentTimeIndex];
-        p.player.seek(new_time + 0.01); // this line was added to prevent bugs when loop_mode is enabled and next_landmark is called (without this listen_loop will take the reading head back to the beginning of the segment)
+        currentTimeIndex = get_index_of(currentTime, landmarks);
+    };
+    if(currentTimeIndex >= landmarks.length - 1) {
+        p.player.seek(audio_duration);
+    } else if(Number.isInteger(currentTimeIndex)) {
+        p.player.seek(landmarks[currentTimeIndex + 1] + 0.01);
+    } else {
+        p.player.seek(landmarks[Math.ceil(currentTimeIndex)] + 0.01);
     }
 }
 
