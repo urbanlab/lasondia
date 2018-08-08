@@ -12,11 +12,31 @@ from pydub import AudioSegment
 from cutter import cutter
 import numpy as np
 
+import pickle
+
 
 # Imports the Google Cloud client library
 from google.cloud import speech
 from google.cloud.speech import enums
 from google.cloud.speech import types
+
+def stringify_bytes_contents(dictionnary):
+    """
+    For each key and value of a dictionnary, if it is a bytes object, turn it into a string.
+    Enables writing this dictionnary into a json file.
+    """
+    dic = dictionnary.copy()
+    for key in dic:
+        try:
+            dic[key] = dic[key].decode()
+        except AttributeError:
+            pass
+        try:
+            dic[key.decode()] = dic[key]
+            dic.pop(key)
+        except AttributeError:
+            pass
+    return dic
 
 def speechtotext(file,file_path):
     '''speech to text for a file of less than a minute'''
@@ -92,6 +112,7 @@ for i in range(len(output)):
        'voice' : output[i][1],
        'end_time' : str(datetime.timedelta(seconds=(i+1)*3))
         })
+data = [stringify_bytes_contents(dict) for dict in data]
 date = {'date' : datetime.datetime.now().strftime("%a %d/%m/%Y %H:%M")}
 json_name = output[0][0][:-9] + '_voices.json'
 with open(json_name, 'w') as f:

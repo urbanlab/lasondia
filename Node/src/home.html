@@ -79,53 +79,36 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <script>
-    var socket = io('http://192.168.71.204:8000/');
-    socket.on('recordList', function(data) {
-      listRecordsLinks(data.recordList[0]);
-    });
-    function readTextFile(file, callback) {
-        var rawFile = new XMLHttpRequest();
-        rawFile.overrideMimeType("application/json");
-        rawFile.open("GET", file, false);
-        rawFile.onreadystatechange = function() {
-            if (rawFile.readyState === 4 && rawFile.status == "200") {
-                callback(rawFile.responseText);
-            }
-        }
-        rawFile.send(null);
+    var socket = io('http://192.168.70.119:8000/');
+
+    window.onload = function() {
+      socket.emit('home/require_records');
+      socket.on('home/records', list_record_links);
     }
-    function listRecordsLinks(recordsList) {
+
+    function create_record_button(record, date, color) {
+      var date_infos = date.split(' ');
+      var week_day = {'Mon':'Lundi', 'Tue':'Mardi', 'Wed':'Mercredi', 'Thu': 'Jeudi', 'Fri': 'Vendredi', 'Sat':'Samedi', 'Sun':'Dimanche'}[date_infos[0]];
+      var day = date_infos[1];
+      var hour = date_infos[2].replace(':', 'h');
+      var button_date = week_day + ' ' + day + ' à ' + hour;
+
+      var link = "/analysis#" + record;
+      $('.records-list-container').append('<div style="background-color:#'+color+'"><a style="text-decoration:none;" href="'+link+'">'+button_date+'</a><a href="'+link+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
+    }
+
+    function list_record_links(records) {
+      console.log(records);
       var colors = ['1FB671','FB4807','FF695B','5FFFCD'];
+      var nb_colors = colors.length;
+      var color_index = 0;
       $('.records-list-container').empty();
-      $()
-      var finalList = []
-      for (var i = 0; i < recordsList.length; i++) {
-        readTextFile("/records/" + recordsList[i] + "/date.json", function(text) {
-          var date = JSON.parse(text).date;
-          var day = date.substr(4, 10);
-          var hour = date.substr(15 , date.length);
-          var day_tab = day.split('/');
-          var actual_date = day_tab[2] + day_tab[1] + day_tab[0] + hour.split(':')[0] + hour.split(':')[1];
-          finalList.push({'actual_date':actual_date,'record':recordsList[i]});
-        });
-      }
-      finalList.sort(function(a,b){
-        if (a.actual_date && b.actual_date)
-          return (b.actual_date.toString().localeCompare(a.actual_date.toString()));
-        return (0);
-      });
-      for (var i = 0; i < finalList.length; i++) {
-        readTextFile("/records/" + finalList[i].record + "/date.json", function(text) {
-          var r = Math.floor(Math.random() * colors.length);
-          var date = JSON.parse(text).date;
-          var days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-          var frenchDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-          var french = frenchDays[days.indexOf(date.substr(0, 3))];
-          var final = french + " " + date.substr(4, date.length)
-          $('.records-list-container').append('<div style="background-color:#'+colors[r]+'"><a style="text-decoration:none;" href="/analysis#'+finalList[i].record+'">'+final+'</a><a href="/analysis#'+finalList[i].record+'"><img src="https://i.imgur.com/3dpbFb1.png" alt="Mountain View" class="image_list"></a></div></body>');
-        });
-      }
+      for(const date in records) {
+        create_record_button(records[date], date, colors[color_index]);
+        color_index = (color_index + 1) % nb_colors;
+      };
     }
+
     </script>
 
     <script>
