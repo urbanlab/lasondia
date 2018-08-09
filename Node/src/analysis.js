@@ -20,6 +20,7 @@ var path = "/records/"+recordId+"/";
     // - the segment / gommette being edited
     // - the number of loop segments / gommettes created, to be able to create a new id for each new element created
     // - the position of the reading head when we switch to edit mode, to come back there when we switch back to listen mode
+    // - the reading speed in listening mode
 var app_mode = 'listen';
 var listen_mode = 'continuous';
 var edition_mode = 'menu';
@@ -32,6 +33,10 @@ var nb_segments_created = 0;
 var nb_gommettes_created = 0;
 var audio_duration;
 var listening_mode_playhead_position = 0;
+var audio_speed = 100;
+var min_speed = 60;
+var max_speed = 150;
+var speed_step = 10;
 
 var initial_gommettes_list;
 var initial_loops_list;
@@ -499,6 +504,26 @@ function random_color() {
     return available_colors[color_picked];
 }
 
+function eventHoldClick(callback, period, target) {
+    // In base Javascript, there is no event that triggers periodically when
+    // the user clicks on an element without releasing the click. So we use this
+    // function, which calls 'callback' every 'period' millisecond while the user is
+    // clicking on 'target' (use $(this), cf. html) without releasing the click.
+    var click_released = false;
+    var function_release = function() {click_released = true};
+    target.on('mouseup', function_release);
+    var loop_function = function() {
+        if(click_released) {
+            target.off('mouseup', function_release);
+            return;
+        } else {
+            callback();
+            setTimeout(loop_function, period);
+        }
+    }
+    loop_function();
+}
+
 //-------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------
 // Utility functions for displaying the right html elements
@@ -660,6 +685,30 @@ function continuous_mode() {
     listen_mode ='continuous';
     $('#loop').removeClass('selected');
     $('#continuous').addClass('selected');
+}
+
+function increase_speed() {
+    if(audio_speed == max_speed) {
+        return
+    } else {
+        if(audio_speed == min_speed) $('#decrease_speed').removeClass('disabled');
+        audio_speed += speed_step;
+        $('audio')[0].playbackRate = audio_speed / 100;
+        $('#percentage_indication').text(String(audio_speed) + '%');
+        if(audio_speed == max_speed) $('#increase_speed').addClass('disabled');
+    }
+}
+
+function decrease_speed() {
+    if(audio_speed == min_speed) {
+        return
+    } else {
+        if(audio_speed == max_speed) $('#increase_speed').removeClass('disabled');
+        audio_speed -= speed_step;
+        $('audio')[0].playbackRate = audio_speed / 100;
+        $('#percentage_indication').text(String(audio_speed) + '%');
+        if(audio_speed == min_speed) $('#decrease_speed').addClass('disabled');
+    }
 }
 
 function edit_mode() {

@@ -150,6 +150,21 @@
     margin-left:-7px;
 }
 
+.speed_button {
+    width: 2ch;
+}
+
+.text_indication {
+    background-color: transparent;
+    font-family: "VistaSanMed";
+    font-size: 20px;
+    color: #695B54;
+    text-align: center;
+    width: 7ch;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .selected {
     color: #EA696A;
 }

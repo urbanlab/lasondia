@@ -65,8 +65,8 @@
 
                     <div class='choice_label'>ZOOM</div>
                     <div class='choice'>
-                        <div class="button listening_button" id='zoomIn' onclick="zoomIn()">Zoom +</div>
                         <div class="button listening_button" id='zoomOut' onclick="zoomOut()">Zoom -</div>
+                        <div class="button listening_button" id='zoomIn' onclick="zoomIn()">Zoom +</div>
                     </div>
 
                     <div class='choice_label'>MODE D'ECOUTE</div>
@@ -81,10 +81,17 @@
                         <div class="button listening_button" id='next' onclick="next_landmark()"> |> </div>
                     </div>
 
+                    <div class='choice_label'> VITESSE DE LECTURE</div>
+                    <div class='choice'>
+                        <div class="button listening_button speed_button" id='decrease_speed' onmousedown="eventHoldClick(decrease_speed, 350, $(this))"> - </div>
+                        <div class="text_indication" id='percentage_indication'>  100% </div>
+                        <div class="button listening_button speed_button" id='increase_speed' onmousedown="eventHoldClick(increase_speed, 350, $(this))"> + </div>
+                    </div>
                     <div class='choice_label'>Mode</div>
                     <div class='choice'>
                         <div class="button listening_button" id='edit_mode' onclick="edit_mode()"> Passer en mode édition </div>
                     </div>
+
 
             </form>
 
