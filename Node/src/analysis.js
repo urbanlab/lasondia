@@ -71,7 +71,7 @@ function initialize_counters() {
     nb_gommettes_created = Math.max(0, Math.max.apply([], gommettes_numbers));
 
     var loop_ids = p.get_segments().map((s) => s.id).filter((id) => id.includes('loop_'));
-    var loop_numbers = loop_ids.map((id) => parseInt(id.split('_'))[1]);
+    var loop_numbers = loop_ids.map((id) => parseInt(id.split('_')[1]));
     nb_segments_created = Math.max(0, Math.max.apply([], loop_numbers));
 }
 
@@ -90,7 +90,8 @@ window.onload = function() {
         initial_loops_list = data.loops;
         background_segment_list = data.segments;
 
-        $('title').html(get_record_title(date));
+        $('#title').html(get_record_title(date));
+
         $('#create_audio').html(
             "<audio onloadeddata=\"initialize_peaks()\" preload=\"true\" controls id=\"audio\">\
                 <source src=\"" + path + "fullRecord.wav\" id=\"audio_source\" type=\"audio/wav\"> \

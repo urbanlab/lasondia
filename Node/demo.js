@@ -252,7 +252,7 @@ app.get('/analysis', function(req, res) {
 });
 
 app.get('/progress', function(req, res) {
-    res.sendfile(__dirname + '/src/progress.html');
+    res.sendFile(__dirname + '/src/progress.html');
 });
 
 app.get('/*', function(req, res) {
