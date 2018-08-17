@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<title>Progress</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<head>
+<link rel="stylesheet" href="/src/all_pages/style.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+ul {list-style-type: none;}
+body {font-family: Verdana, sans-serif;}
+
+/* Month header */
+
+i.fa {
+    color: white;
+}
+
+.month {
+    padding: 30px 25px;
+    width: 100%;
+    background: #1fb671;
+    text-align: center;
+}
+
+/* Month list */
+.month ul {
+    margin: 0;
+    padding: 0;
+}
+
+.month ul li {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+/* Previous button inside month header */
+.month .prev {
+    float: left;
+    padding-top: 10px;
+}
+
+/* Next button */
+.month .next {
+    float: right;
+    padding-top: 10px;
+}
+
+/* Weekdays (Mon-Sun) */
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color:#ddd;
+}
+
+.weekdays li {
+    display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+/* Days (1-31) */
+.days {
+    padding: 15px 0;
+    background: #eee;
+    margin: 0;
+}
+
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 7px;
+    font-size:12px;
+    color: #777;
+}
+
+/* Highlight the "current" day */
+.days li .active {
+    padding: 5px;
+    background: #1fb671;
+    color: white !important
+}
+</style>
+</head>
+<body class="w3-light-grey">
+<div id="nav-placeholder"></div>
+<div class="content">
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:0px;margin-top:50px;">
+
+  <div class="w3-row-padding w3-margin-bottom">
+    <div class="w3-quarter">
+    <h1 style="background-color:#f72940;">
+      <div class="w3-container w3-padding-16">
+        <div class="w3-left"><i class="fa fa-graduation-cap w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3><font color="white">18</font></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4><font color="white">Cours</font></h4>
+      </div>
+      </h1>
+    </div>
+    <div class="w3-quarter">
+    <h1 style="background-color:#1fb671;">
+      <div class="w3-container w3-padding-16">
+        <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3><font color="white">37</font></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4><font color="white">Connexions</font></h4>
+      </div>
+      </h1>
+    </div>
+    <div class="w3-quarter">
+    <h1 style="background-color:#fb4807;">
+      <div class="w3-container w3-padding-16">
+        <div class="w3-left"><i class="fa fa-clock-o w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3><font color="white">15</font></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4><font color="white">Heures</font></h4>
+      </div>
+      </h1>
+    </div>
+    <div class="w3-quarter">
+    <h1 style="background-color:#195c84;">
+      <div class="w3-container w3-text-white w3-padding-16">
+        <div class="w3-left"><i class="fa fa-comments-o w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3><font color="white">50</font></h3>
+        </div>
+        <div class="w3-clear"></div>
+        <h4><font color="white">Commentaires</font></h4>
+      </div>
+      </h1>
+    </div>
+  </div>
+
+ <div class="month">
+  <ul>
+    <li class="prev">&#10094;</li>
+    <li class="next">&#10095;</li>
+    <li>Mars<br><span style="font-size:18px">2018</span></li>
+  </ul>
+</div>
+
+<ul class="weekdays">
+  <li>Lu</li>
+  <li>Ma</li>
+  <li>Me</li>
+  <li>Je</li>
+  <li>Ve</li>
+  <li>Sa</li>
+  <li>Di</li>
+</ul>
+
+<ul class="days">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li><span class="active">4</span></li>
+  <li>5</li>
+  <li>6</li>
+  <li>7</li>
+  <li>8</li>
+  <li><span class="active">9</span></li>
+  <li><span class="active">10</span></li>
+  <li><span class="active">11</span></li>
+  <li>12</li>
+  <li>13</li>
+  <li>14</li>
+  <li>15</li>
+  <li><span class="active">16</span></li>
+  <li>17</li>
+  <li><span class="active">18</span></li>
+  <li>19</li>
+  <li><span class="active">20</span></li>
+  <li>21</li>
+  <li>22</li>
+  <li>23</li>
+  <li>24</li>
+  <li>25</li>
+  <li>26</li>
+  <li>27</li>
+  <li>28</li>
+  <li><span class="active">29</span></li>
+  <li><span class="active">30</span></li>
+  <li>31</li>
+</ul> 
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+        overlayBg.style.display = "none";
+    } else {
+        mySidebar.style.display = 'block';
+        overlayBg.style.display = "block";
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+    overlayBg.style.display = "none";
+}
+</script>
+<script src="/src/all_pages/navbar_loader.js"></script>
+
+</div>
+</body>
+</html>

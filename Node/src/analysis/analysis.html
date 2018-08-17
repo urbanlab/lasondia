@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+    <link rel="stylesheet" href="/src/all_pages/style.css">
+    <link rel="stylesheet" href="/src/analysis/analysis.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body class="noselect">
+    <div id="nav-placeholder"></div>
+
+
+    <div class="content">
+
+        <div id="title"></div>
+
+
+        <div id='menu'>
+            
+            <div id='left_menu'>
+
+                <div class='comment_cell' id='comment_segment_cell'>
+                    <label for="comment" class='label_input' id='label_segment'> Commentaire de la boucle: </label>
+                    <input type='text' class='text_input comment' id='comment_segment'>
+                    <div class='button validation_button' id='validate_segment_comment' onclick='validate_segment_comment()'> OK </div>
+                </div>
+
+                <div class='comment_cell' id='comment_gommette_cell'>
+                    <label for="comment" class='label_input' id='label_gommette'> Commentaire de la gommette: </label>
+                    <input type='text' class='text_input comment' id='comment_gommette'>
+                    <div class='button validation_button' id='validate_gommette_comment' onclick='validate_gommette_comment()'> OK </div>
+                </div>                
+
+            </div>
+
+            <div id='right_menu'>
+
+                <div id='edit_segment_cell'>
+                    <div class='button button_edit_segments button_delete' id='delete_selected_segment' onclick="delete_selected_segment()"> Supprimer </div>
+                    <div class='button button_edit_segments' id='cancel_edition_segment' onclick='cancel_edition()'> Annuler </div>
+                    <div class='button button_edit_segments' id='return_to_menu_segment' onclick='return_to_menu()'> Terminé </div>
+                </div>
+
+                <div id='edit_gommette_cell'>
+                    <div class='button button_edit_gommettes button_delete' id='delete_selected_gommette' onclick="delete_selected_gommette()"> Supprimer </div>
+                    <div class='button button_edit_gommettes' id='cancel_edition_gommette' onclick='cancel_edition()'> Annuler </div>
+                    <div class='button button_edit_gommettes' id='return_to_menu_gommette' onclick='return_to_menu()'> Terminé </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div id="peaks-container"></div>
+
+
+        <div id=forms>
+
+            <form id='listen_form'>
+
+                <div class='form_line' id='audio_line'>
+                    <div class='action_group'>
+                        <div id="create_audio"></div>
+                    </div>
+                </div>
+
+
+                <div class='form_line'>
+                    <div class='media_player_controls'>
+
+                        <div class='controls_block'>
+                            <div class='control_label'> ZOOM: </div>
+                            <div class='control_text_button' id='zoomOut' onclick="zoomOut()"> - </div>
+                            <div class="text_indication" id='zoom_indication'>  100% </div>
+                            <div class='control_text_button' id='zoomIn' onclick="zoomIn()"> + </div>
+                        </div>
+
+                        <div class='controls_block'>
+
+                            <object data='/images/Icons/baseline-loop-24px.svg' class='control_button' type="image/svg+xml" id='loop'> </object>
+
+                            <object data='/images/Icons/baseline-skip_previous-24px.svg' class='control_button player_button' type="image/svg+xml" id='previous'> </object>
+
+                            <object data='/images/Icons/baseline-play_arrow-24px.svg' class='control_button player_button' type="image/svg+xml" id='play'> </object>
+
+                            <object data='/images/Icons/baseline-skip_next-24px.svg' class='control_button player_button' type="image/svg+xml" id='next'> </object>
+
+                            <object data='/images/Icons/baseline-volume_mute-24px.svg' class='control_button' type="image/svg+xml" id='sound'> </object>
+                            <input type='range' min='0' max='1' value='1' step='0.01' autocomplete='off' id='sound_control' oninput="change_volume();">
+
+                        </div>
+
+                        <div class='controls_block'>
+                            <div class='control_label'> VITESSE: </div>
+                            <div class='control_text_button' id='decrease_speed' onmousedown="eventHoldClick(decrease_speed, 350, $(this))"> - </div>
+                            <div class="text_indication" id='speed_indication'>  100% </div>
+                            <div class='control_text_button' id='increase_speed' onmousedown="eventHoldClick(increase_speed, 350, $(this))"> + </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                    <div class='form_line'>
+                        <div class='choice'>
+                            <div class="button listening_button" id='edit_mode' onclick="edit_mode()"> Passer en mode édition </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+
+            <form id='edit_form'>
+                <div class='form_line edit_line'>
+                    <div class="button edition_button" id='create_segment' onclick="create_segment()"> Nouvelle boucle </div>
+                    <div class="button edition_button" id='edit_segments' onclick="edit_segments()"> Gérer les boucles </div>
+                    <div class="button edition_button" id='create_gommette' onclick="create_gommette()"> Nouvelle gommette </div>
+                    <div class="button edition_button" id='edit_gommettes' onclick="edit_gommettes()"> Gérer les gommettes </div>
+                    <div class="button edition_button" id='save_changes' onclick="save_changes()"> Sauvegarder les annotations </div>
+                </div>
+                <div class='form_line'>
+                    <div class="button edition_button" id='listening_mode' onclick="listening_mode()"> Retourner au mode lecture </div>
+                </div>
+            </form>
+
+        </div> 
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+
+        <script>
+            var socket = io('http://192.168.70.119:8000/');
+        </script>
+        <script src="/src/analysis/analysis.js"></script>
+    </div>
+
+
+    <script src="/src/all_pages/navbar_loader.js"></script>
+
+</body>
+
+</html>

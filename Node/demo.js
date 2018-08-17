@@ -240,23 +240,23 @@ app.use('/records', express.static(__dirname + '/records'));
 //-------------------------------------------------------------------------------------------------------------
 
 app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/src/home.html');
+    res.sendFile(__dirname + '/src/home/home.html');
 });
 
 app.get('/record', function(req, res) {
-    res.sendFile(__dirname + '/src/record.html');
+    res.sendFile(__dirname + '/src/record/record.html');
 });
 
 app.get('/analysis', function(req, res) {
-    res.sendFile(__dirname + '/src/analysis.html');
+    res.sendFile(__dirname + '/src/analysis/analysis.html');
 });
 
 app.get('/progress', function(req, res) {
-    res.sendFile(__dirname + '/src/progress.html');
+    res.sendFile(__dirname + '/src/progress/progress.html');
 });
 
 app.get('/*', function(req, res) {
-    res.sendFile(__dirname + '/src/error404.html');
+    res.sendFile(__dirname + '/src/all_pages/error404.html');
 });
 
 //-------------------------------------------------------------------------------------------------------------
