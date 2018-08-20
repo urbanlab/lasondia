@@ -7,7 +7,7 @@ var liveVolume;
 (function(window) {
   
   // we use a closure here, in order to isolate all the recording variables
-  var client = new BinaryClient('ws://192.168.70.119:9001');
+  var client = new BinaryClient('ws://192.168.71.204:9001');
 
 
   client.on('open', function() {

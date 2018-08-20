@@ -26,9 +26,10 @@ def stringify_bytes_contents(dictionnary):
     Enables writing this dictionnary into a json file.
     """
     dic = dictionnary.copy()
-    for key in dic:
+    dic_keys = list(dic.keys())
+    for key in dic_keys:
         try:
-            dic[key] = dic[key].decode()
+            dic[key] = dic[key].decode('utf-8')
         except AttributeError:
             pass
         try:
