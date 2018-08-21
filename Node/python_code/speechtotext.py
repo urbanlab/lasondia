@@ -33,7 +33,7 @@ def stringify_bytes_contents(dictionnary):
         except AttributeError:
             pass
         try:
-            dic[key.decode()] = dic[key]
+            dic[key.decode('utf-8')] = dic[key]
             dic.pop(key)
         except AttributeError:
             pass

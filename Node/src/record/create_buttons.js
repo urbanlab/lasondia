@@ -7,7 +7,7 @@ $(document).ready(function() {
 
   gommettes.forEach(function(gommette) {
       var gommette_container = $("<div class='gommette_container'></div>");
-      var gommette_button = $("<div class='gommette_button'></div>").html("<img src='"+gommette.image_src+"' height=80px>");
+      var gommette_button = $("<div class='gommette_button'></div>").html("<img src='"+gommette.image_src+"' height=50em>");
       var gommette_comment = $("<div class='gommette_comment'></div>").text(gommette.comment);
 
       gommette_button.on('click', () => {if(recording) add_gommette(gommette.identifier)});
@@ -25,8 +25,8 @@ $(document).ready(function() {
       start_recording_for_interface();
     } else {
       stop_recording_for_stream();
-      stop_recording_for_interface();        
+      stop_recording_for_interface();
     }
   });
 
-});   
+});
