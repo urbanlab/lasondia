@@ -1,8 +1,8 @@
 # lasondia
 ## Analyse de musique pour cours de musique
 
-Réalisé lors du workshop IA (2018 - Lyon , France) organisé par : @urbanlab ([https://github.com/urbanlab]) *+* DSAA Villefontaine
-Inspiré par lesondier ([http://www.lesondier.com/]) et sa sondbox
+Réalisé lors du workshop IA (2018 - Lyon , France) organisé par : @urbanlab (https://github.com/urbanlab) *+* DSAA Villefontaine
+Inspiré par lesondier (http://www.lesondier.com/) et sa sondbox
 
 ## Pricipaux contributeurs
 - Anthony Angelot (Ecole Centrale Lyon) @aangelot
@@ -27,7 +27,7 @@ lasondia est un prototype d'application Web permettant:
 Pour l'instant, l'application est la même pour le professeur et pour les élèves; elle doit à terme être séparée en deux interfaces différentes.
 
 ### Etat du prototype
-Actuellement, lasondia est un dispositif exposé à l'UrbnLab de la métropole de Lyon. Il se compose:
+Actuellement, lasondia est un dispositif exposé à l'UrbanLab de la métropole de Lyon. Il se compose:
 
 - *D'un piano* faisant office d'instrument de musique de démonstration.
 - *D'un ordinateur* qui fait office de serveur et d'interface élève (on y consulte ses cours et outils d'écoute, ainsi que sa progression).
@@ -48,9 +48,9 @@ Enfin, la gestion des lumières est assurée par un code Arduino, lancé à part
 #### Technologies utilisées
 lasondia a été développée sous **linux ubuntu 16.04** pour l'ordinateur et **Androïd** pour la tablette. On a:
 
-- *Enregistrement du cours*: **Audio Stream** pour la communication du flux musical au serveur ([https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js]); **p5.js** pour le rendu visuel en direct([https://p5js.org/]).
+- *Enregistrement du cours*: **Audio Stream** pour la communication du flux musical au serveur (https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js); **p5.js** pour le rendu visuel en direct(https://p5js.org/).
 - *Segmentation du cours*: **Python 3.6.5** et bibliothèque **pyAudioAnalysis**
-- *Ecoute et édition du cours*: bibliothèque **Peaks.js** ([https://github.com/bbc/peaks.js/tree/master])
+- *Ecoute et édition du cours*: bibliothèque **Peaks.js** (https://github.com/bbc/peaks.js/tree/master)
 - HTML, CSS, Javascript(Jquery), NodeJS et Processing
 
 #### Organisation du code
