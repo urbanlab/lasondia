@@ -2,7 +2,6 @@
 
 WORK_DIR="/home/erasme/lasondia"
 PATH=$PATH:/usr/share/processing/processing-3.3.7
-export GOOGLE_APPLICATION_CREDENTIALS="/home/erasme/lasondia/Node/googlecredentials.json"
 
 # Démmarage de processing : gestion du switch lumière
 nohup processing-java  --sketch=$WORK_DIR/BoutonLumiere --run --present > /tmp/BoutonLumiere.log & 
