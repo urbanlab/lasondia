@@ -1,11 +1,10 @@
 # lasondia
 ## Analyse de musique pour cours de musique
 
-Réalisé lors du workshop IA (2018 - Lyon , France) organisé par : @urbanlab (https://github.com/urbanlab) *+* DSAA Villefontaine
+Réalisé lors du workshop IA (2018 - Lyon , France) organisé par : @urbanlab ([https://github.com/urbanlab]) *+* DSAA Villefontaine
+Inspiré par lesondier ([http://www.lesondier.com/]) et sa sondbox
 
-Inspiré par lesondier (http://www.lesondier.com/) et sa sondbox
-
-### Pricipaux contributeurs
+## Pricipaux contributeurs
 - Anthony Angelot (Ecole Centrale Lyon) @aangelot
 - Theo Ferreira (Epitech) @theo-hubgrade
 - Zoé Paille (DSAA) @Troiscentdeux
@@ -13,98 +12,52 @@ Inspiré par lesondier (http://www.lesondier.com/) et sa sondbox
 - Victor Lévêque (DSAA)
 - Léa Carles (DSAA)
 - Angélique Giannini (DSAA)
+- Natan Baron-Trocellier (Ecole Centrale Lyon, maintenance post-workshop) @NatanBT
 
-### Fonctionnalités basiques
-- Enregistrement du cours de musique que le professeur peut augmenter avec des gommettes (repères)
-- Système de speech to text automatique
-- Séparation entre les parties parlées du cours et les parties musicales
-- page web disponibles pour accéder aux cours pour les élèves
+## Description
 
-### Google API installation
-- Créer un compte sur la plateforme google cloud
-- Créer un projet utilisant l'API speech to text (ou choisir le projet lasondia si accessible) et obtenir une clé google credentials
-(la nommer googlecredentials.json et la sauvegarder sous /home/erasme/lasondia/Node/)
-- Configurer l'environnement google cloud SDK (cf google help)
+### Principe
+lasondia est un prototype d'application Web permettant:
 
-### Technos utilisées
-- P5.js Pour un bon rendu visuel en direct
-- Inspiré par l'audio stream (https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js)
-- Python
-- Google Speech To Text API
-- Microphones
-- Android tablette
-- Peaks.js
-- Nodejs serveur
-- Processing
-- Front end (HTML5, CSS3)
+- **D'enregistrer** un cours de musique en y ajoutant des repères commentés (gommettes).
+- **De séparer** les parties parlées du cours des parties musicales, grâce à un algorithme de segmentation/classification de l'enregistrement sonore.
+- **De réécouter** le cours en s'aidant d'**outils d'écoute** (gommettes, boucles de lecture, variations de la vitesse de lecture) éditables à la volée.
+- De **consulter sa progression** à l'aide d'une interface de type calendrier.
 
-### Erreurs relatives
-https://github.com/processing/p5.js/issues/2726#issuecomment-375837110
+Pour l'instant, l'application est la même pour le professeur et pour les élèves; elle doit à terme être séparée en deux interfaces différentes.
 
-### Lancement
-- Lancer le switcher de lumière en entrant la commande suivante dans la racine du dépôt (lasondia) :
-- /usr/share/processing/processing-3.3.7/processing ./BoutonLumiere/BoutonLumiere.pde
-- Ensuite cliquer sur le bouton de lancement et vérifier que les lumières fonctionnent correctement
-- Puis taper ceci :
-- export GOOGLE_APPLICATION_CREDENTIALS="/home/erasme/lasondia/Node/googlecredentials.json"
-- Verifier l'adresse IP pour les sockets du serveur Node
-- Enfin lancer le serveur avec la commande suivante à entrer depuis le dossier "Node" :
-- node demo.js
-- Attention : Utiliser mozilla firefox pour aller sur la plateforme (chrome et explorer ne fonctionneront pas)
-- Attention : L'analyse d'un fichier son d'une minute peut prendre plus que 20 secondes
+### Etat du prototype
+Actuellement, lasondia est un dispositif exposé à l'UrbnLab de la métropole de Lyon. Il se compose:
 
-[EN version]
-# lasondia
-## Sound Analysis for Music Lessons
+- *D'un piano* faisant office d'instrument de musique de démonstration.
+- *D'un ordinateur* qui fait office de serveur et d'interface élève (on y consulte ses cours et outils d'écoute, ainsi que sa progression).
+- *D'une tablette* qui fait office d'interface professeur (on l'utilise pour enregistrer le cours).
+- *De projecteurs* contrôlés par un Arduino et permettant de générer une ambiance lumineuse.
 
-Made during AI Workshop (2018 - Lyon , France) organized by : @urbanlab (https://github.com/urbanlab) *+* DSAA Villefontaine
+La partie Arduino/BoutonLumière du code pourra être laissée de côté pour une reprise de lasondia en-dehors du Lab, et utiliser une tablette pour enregistrer les cours n'est pas nécessaire. En revanche, il est vivement recommandé d'utiliser un micro externe pour les enregistrements.
 
-Inspired by lesondier (http://www.lesondier.com/) and its sondbox
+### Structure du code
 
-### Main contributors
-- Anthony Angelot (Ecole Centrale Lyon) @aangelot
-- Theo Ferreira (Epitech) @theo-hubgrade
-- Zoé Paille (DSAA) @Troiscentdeux
-- Sébastien Albert (Studio Albert) @DudleySmith
-- Victor Lévêque (DSAA)
-- Léa Carles (DSAA)
-- Angélique Giannini (DSAA)
+#### Architecture logicielle
+lasondia est une application Web, utilisant **NodeJS** côté serveur et **HTML/CSS/Javascript(Jquery)** côté client. La communication entre serveur et client est assurée par un serveur binaire *BinaryJS* pour la transmission des flux sonores, et par *socket.io* pour les autres communications.
 
-### Basic Steps and features
-- Recording music lessons while teacher can augment with notes
-- Automatic commenting system
-- Separation between the musical parts and the spoken parts
-- Web page available for students
+Côté serveur, la **segmentation** de l'enregistrement sonore est mise en oeuvre par un **programme Python** lancé depuis le code Node.
 
-### Google API set up
-- Create an account on google cloud platform
-- Create a project with the speech to text API (or choose the "lasondia project") and get a google credentials key
-(name it googlecredentials.json and save it under /home/erasme/lasondia/Node/)
-- Set up the google environment (cf google help)
+Enfin, la gestion des lumières est assurée par un code Arduino, lancé à part.
 
-### Tech used, shopping list
-- P5.js for nice live visualisation
-- audio stream inspired (from https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js)
-- Python (wave library)
-- Google Speech To Text API
-- Microphones
-- Android tablet
-- Peaks.js
-- Nodejs server
-- Processing
-- Front end (HTML5, CSS3)
+#### Technologies utilisées
+lasondia a été développée sous **linux ubuntu 16.04** pour l'ordinateur et **Androïd** pour la tablette. On a:
 
-### Relatives Issues
-https://github.com/processing/p5.js/issues/2726#issuecomment-375837110
+- *Enregistrement du cours*: **Audio Stream** pour la communication du flux musical au serveur ([https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js]); **p5.js** pour le rendu visuel en direct([https://p5js.org/]).
+- *Segmentation du cours*: **Python 3.6.5** et bibliothèque **pyAudioAnalysis**
+- *Ecoute et édition du cours*: bibliothèque **Peaks.js** ([https://github.com/bbc/peaks.js/tree/master])
+- HTML, CSS, Javascript(Jquery), NodeJS et Processing
 
-### Start it
-- Start ligth switch by typing the folowing command :
-- /usr/share/processing/processing-3.3.7/processing ./BoutonLumiere/BoutonLumiere.pde
-- Then click on the start button and verify that the ligths are working properly
-- Then enter the following :
-- export GOOGLE_APPLICATION_CREDENTIALS="/home/erasme/lasondia/Node/googlecredentials.json"
-- Verify IP address for the sockets
-- Finally start the server with this command in the Node directory :
-- node demo.js
-- Be careful : go to the server with mozilla firefox (chrome and explorer won't work)
-- Be careful : the analysis of a one minute record can last more than 20 seconds
+#### Organisation du code
+- La gestion des lumières est assurée dans les dossiers *root/BoutonLumière* (interface graphique de contrôle) et *root/arduino/SwitchDMX* (code Arduino pour contrôler les projecteurs).
+- L'application Web est comprise dans le dossier *root/Node*. Voir le Readme de ce dossier pour plus de détails.
+- Les scripts de démarrage et d'arrêt du dispositif sont situés dans le dossier *root/scripts*
+
+
+### Installation et lancement
+Voir le [wiki du projet](https://github.com/urbanlab/lasondia/wiki).
