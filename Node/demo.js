@@ -119,7 +119,7 @@ function get_records() {
   var record_folders = records.map((folderName) => records_path + folderName);
   record_folders.forEach(function(path, index) {
     var record_id = records[index];
-    var segments_path = path +  '/fullRecord_voices.json';
+    var segments_path = path +  '/segments.json';
     var date_path = path + '/date.json';
     if(fs.existsSync(segments_path) && fs.existsSync(date_path)) {
       var date = fs.readFileSync(date_path, 'utf8');
@@ -149,15 +149,15 @@ function fetch_initialization_data(record_path) {
   var gommettes = events.gommettes;
   var loops = events.loops;
 
-  var segmentFile_content = fs.readFileSync(record_path + 'fullRecord_voices.json', 'utf8');
+  var segmentFile_content = fs.readFileSync(record_path + 'segments.json', 'utf8');
   var periods = JSON.parse(segmentFile_content);
   var segments = [];
   periods.forEach((period, index) => {
     var new_bg_segment = {
-        startTime: getSeconds(period.time),
-        endTime: getSeconds(period.end_time),
+        startTime: period.startTime,
+        endTime: period.endTime,
         editable: false,
-        color: period.music ? '#195C84' : '#1FB671',  
+        color: {'silence': 'grey', 'music': '#195C84', 'speech': '#1FB671'}[period.class],  
         id: 'static_' + String(index)
     }
     segments.push(new_bg_segment);
@@ -214,9 +214,9 @@ binaryServer.on('connection', function(client) {
             var PythonShell = require('python-shell');
             var options = {
               scriptPath: __dirname + '/python_code',
-              args: ['fullRecord.wav',outFolder]
+              args: [outFile]
             };
-            PythonShell.run('speechtotext.py',options, function (err,results) {
+            PythonShell.run('segmentation.py', options, function (err,results) {
               if(err) console.log('error', err);
               console.log('results: %j', results);
             });

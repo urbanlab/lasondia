@@ -147,29 +147,18 @@ function initialize_peaks() {
             var myAudioContext = new AudioContext();
 
             var options = {
+                // Webpage's properties used in order to build the peaks.js element
                 container: document.getElementById('peaks-container'),
                 mediaElement: document.querySelector('audio'),
                 audioContext: myAudioContext,
+                // Possible levels of zoom
                 zoomLevels: [512, 1024, 2048, 4096],
                 // Colour for the zoomed in waveform
-                zoomWaveformColor: 'rgba(0, 225, 128, 1)',
+                zoomWaveformColor: 'transparent',
                 // Colour for the overview waveform
-                overviewWaveformColor: 'rgba(0,0,0,0.2)',
-                // Colour for the overview waveform rectangle
-                // that shows what the zoom view shows
-                overviewHighlightRectangleColor: 'grey',
-                // Colour for the in marker of segments
-                inMarkerColor: '#a0a0a0',
-                // Colour for the out marker of segments
-                outMarkerColor: '#a0a0a0',
+                overviewWaveformColor: 'transparent',
                 // Colour of the play head
                 playheadColor: 'rgba(0, 0, 0, 1)',
-                // Colour of the play head text
-                playheadTextColor: '#aaa',
-                // Colour of the axis gridlines
-                axisGridlineColor: '#ccc',
-                // Colour of the axis labels
-                axisLabelColor: '#aaa',
                 // Zoom view adapter to use. Valid adapters are:
                 // 'animated' (default) and 'static'
                 zoomAdapter: 'animated',
@@ -183,9 +172,11 @@ function initialize_peaks() {
                 mediaElement: options.mediaElement,
                 audioContext: options.audioContext,
                 zoomLevels: options.zoomLevels,
-                segments: [],
-                zoomAdapter: options.zoomAdapter,
+                overviewWaveformColor: options.overviewWaveformColor,
+                zoomWaveformColor: options.zoomWaveformColor,
                 playheadColor: options.playheadColor,
+                zoomAdapter: options.zoomAdapter,
+                segments: [],
                 points: []
             });
 
