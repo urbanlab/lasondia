@@ -31,21 +31,18 @@ def audio_segmentation(wav_file_path, classifier_type, classifier_path):
 		('classifier' + 'classifier.arff' = trained_classifier) 
 	"""
 
-	[Fs, x] = aIO.readAudioFile(wav_file_path)
-	startTime = 0
-	endTime = x / float(Fs)
 	sound_segments = aS.mtFileClassification(wav_file_path, classifier_path, classifier_type, return_for_user=True)
 
 	segments = sound_segments['segments']
 	classes = sound_segments['classes']
-	silences = detect_silences(wav_file_path)
+	silences = detect_silences(wav_file_path, 2, 1)
 
 	final_segmentation = incorporate_silences_to_segments(segments, classes, silences)
 	return final_segmentation
 
 
 
-def detect_silences(wav_file_path, min_silence_size=2, min_sound_size=2):
+def detect_silences(wav_file_path, frame_size, frame_step, threshold=100):
 	"""
 		Returns the list of the silences in a sound track, as a list of time segments.
 		It is done separately from classification as the algorithm to detect silences is
@@ -53,47 +50,46 @@ def detect_silences(wav_file_path, min_silence_size=2, min_sound_size=2):
 		more explanations)
 	"""
 
-	# We detect all the periods with significant sound level as an array: sound_segments
+	# We choose to detect silences as very-low-sound-amplitude segments.
 	[Fs, x] = aIO.readAudioFile(wav_file_path)
+
 	startTime = 0
 	endTime = len(x) / float(Fs)
-	sound_segments = aS.silenceRemoval(x, Fs, 0.020, 0.020, smoothWindow = 1., Weight=0.5, plot=False)
-	if sound_segments == []:
-		return [[startTime, endTime]]
 
-	# We define silence segments as the complementary of sound_segments
-	silence_segments = [[startTime, sound_segments[0][0]]]
-	n = len(sound_segments)
-	for i in range(n - 1):
-		silence_segments.append([sound_segments[i][1], sound_segments[i+1][0]])
-	silence_segments.append([sound_segments[n - 1][1], endTime])
+	mean_amplitude = compute_mean_amplitude_vector(Fs, x, frame_size, frame_step)
+	nb_frames = len(mean_amplitude)
+	silence_indexes = [i for i in range(nb_frames) if mean_amplitude[i] <= 100]
 
-	# We remove short silences (false positives)
-	silence_segments = [segment for segment in silence_segments if segment[1] - segment[0] >= min_silence_size]
-	
-	# We remove short sounds surrounded by silences (false negatives)
-	n_silences = len(silence_segments)
-	merge_with_next = [(silence_segments[i+1][0] - silence_segments[i][1] <= min_sound_size) for i in range(n_silences - 1)]
+	silence_segments = []
+	for index in silence_indexes:
+		silence_start = np.round(index * frame_step)
+		silence_end = np.min([np.round(silence_start + frame_size), endTime])
+		if (silence_segments and silence_segments[-1][1] >= silence_start):
+			silence_segments[-1][1] = silence_end
+		else:
+			silence_segments.append([silence_start, silence_end])
 
-	for i in range(n_silences - 1, 0, -1):
-		if merge_with_next[i - 1]:
-			silence_segments[i -1][1] = silence_segments[i][1]
-			silence_segments.pop(i)
+	return np.array(silence_segments)
 
-	if silence_segments[0][0] - startTime < min_sound_size:
-		silence_segments[0][0] = startTime
-	if endTime - silence_segments[-1][1] < min_sound_size:
-		silence_segments[-1][1] = endTime
 
-	# We round time values to have the same format as for classified sound segments (we have to leave the last value unchanged)
-	last_value = silence_segments[-1][1]
-	silence_segments = np.array(silence_segments)
-	silence_segments = np.round(silence_segments)
-	if last_value == endTime:
-		silence_segments[-1, 1] = endTime
+def compute_mean_amplitude_vector(Fs, signal, frame_size, frame_step):  #compute_amplitude_vector(Fs, x, 2sec, 1sec)
+	n = len(signal)
+	nb_samples_frame = int(frame_size * Fs)
+	nb_samples_step = int(frame_step * Fs)
+	nb_frames = int(np.ceil(n / nb_samples_step))
+	nb_complete_frames = int(np.ceil((n - nb_samples_frame + 1) / nb_samples_step))
 
-	# We return the filtered silence segment list
-	return silence_segments
+	amplitude_vector = np.zeros(nb_frames)
+	for i in range(nb_complete_frames):
+		frame_start = i * nb_samples_step
+		amplitude_vector[i] = np.sum(abs(signal[frame_start:frame_start + nb_samples_frame])) / nb_samples_frame
+
+	for i in range(nb_complete_frames, nb_frames):
+		frame_start = i * nb_samples_step
+		frame_length = n - frame_start
+		amplitude_vector[i] = np.sum(abs(signal[frame_start:n])) / frame_length
+
+	return amplitude_vector
 
 
 def incorporate_silences_to_segments(segments, classes, silences):
@@ -108,7 +104,7 @@ def incorporate_silences_to_segments(segments, classes, silences):
 	segs = [{'segment': segments[i], 'class': classes[i]} for i in range(n_seg)]
 	for i in range(n_sil):
 		incorporate_silence_to_segments(silences[i], segs)
-	segs = [seg for seg in segs if seg['segment'][1] > seg['segment'][0]]
+	segs = [seg for seg in segs if seg['segment'][1] > seg['segment'][0]] # Deletion of empty segments
 	return segs
 
 
