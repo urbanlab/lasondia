@@ -46,7 +46,7 @@ Côté serveur, la **segmentation** de l'enregistrement sonore est mise en oeuvr
 Enfin, la gestion des lumières est assurée par un code Arduino, lancé à part.
 
 #### Technologies utilisées
-lasondia a été développée sous **linux ubuntu 16.04** pour l'ordinateur et **Androïd** pour la tablette. On a:
+lasondia a été développée sous **linux ubuntu 16.04** pour l'ordinateur et **Androïd** pour la tablette. Elle n'a été conçue que pour fonctionner avec le navigateur **Mozilla Firefox**. On a:
 
 - *Enregistrement du cours*: **Audio Stream** pour la communication du flux musical au serveur (https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js); **p5.js** pour le rendu visuel en direct(https://p5js.org/).
 - *Segmentation du cours*: **Python 3.6.5** et bibliothèque **pyAudioAnalysis**
