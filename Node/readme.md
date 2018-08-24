@@ -17,14 +17,14 @@ L'application se compose de 4 pages:
 - **progress** est une maquette de page Web, figurant une interface de suivi visuel de la progression de l'élève utilisateur. Elle n'est pas très importante, et ses codes CSS et Javascript sont également inclus dans sa page html.
 - **analysis** est la page dans laquelle l'élève consulte/interagit avec l'enregistrement de son cours de musique. Elle fait appel à la bibliothèque *peaks.js*, située dans les node-modules (à changer, il n'est pas pertinent qu'une bibliothèque Front s'y trouve).
 - **record** est la page d'enregistrement des cours. Utilisant un serveur binaire et p5.js, son code Javascript est plus complexe et s'organise en 3 fichiers:
-..1. *create_button.js* permet de générer des éléments du DOM (boutons de la page) via Javascript pour compléter la page.
-..2. *sketch.js* comprend le code p5.js, et permet de représenter l'interface graphique (canevas) de la page. Il gère aussi l'ajout de gommettes dans l'enregistrement, lorsque le professeur appuie sur les boutons associés.
-..3. stream_server.js comprend (dans une closure) le code permettant d'écouter le micro et de transférer le flux audio ainsi obtenu au serveur, en continu.
+   1. *create_button.js* permet de générer des éléments du DOM (boutons de la page) via Javascript pour compléter la page.
+   2. *sketch.js* comprend le code p5.js, et permet de représenter l'interface graphique (canevas) de la page. Il gère aussi l'ajout de gommettes dans l'enregistrement, lorsque le professeur appuie sur les boutons associés.
+   3. stream_server.js comprend (dans une closure) le code permettant d'écouter le micro et de transférer le flux audio ainsi obtenu au serveur, en continu.
 - **all_pages** comprend les codes appliqués aux quatre pages:
-..1. *style.css* est la feuille de style comprenant les éléments de style communs à toutes les pages.
-..2. Les fichiers *navbar* permettent d'afficher la barre de navigation à gauche sur toutes les pages de l'application, grâce au script *navbar_loader.js* (inséré à la fin de chaque fichier html)
-..3. *error404.html* est la page qui s'affiche en cas d'erreur d'URL.
-..3. *socket.io.js* permet à chaque page d'ouvrir un socket et de communiquer avec le serveur.
+   1. *style.css* est la feuille de style comprenant les éléments de style communs à toutes les pages.
+   2. Les fichiers *navbar* permettent d'afficher la barre de navigation à gauche sur toutes les pages de l'application, grâce au script *navbar_loader.js* (inséré à la fin de chaque fichier html)
+   3. *error404.html* est la page qui s'affiche en cas d'erreur d'URL.
+   4. *socket.io.js* permet à chaque page d'ouvrir un socket et de communiquer avec le serveur.
 
 ### Organisation des enregistrements
 A chaque enregistrement correspond un dossier de nom aléatoire compris dans le dossier **records**. Ce dossier comprend:
