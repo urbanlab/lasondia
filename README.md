@@ -39,19 +39,19 @@ La partie Arduino/BoutonLumière du code pourra être laissée de côté pour un
 ### Structure du code
 
 #### Architecture logicielle
-lasondia est une application Web, utilisant **NodeJS** côté serveur et **HTML/CSS/Javascript(Jquery)** côté client. La communication entre serveur et client est assurée par un serveur binaire *BinaryJS* pour la transmission des flux sonores, et par *socket.io* pour les autres communications.
+lasondia est une application Web, utilisant *NodeJS* côté serveur et *HTML/CSS/Javascript(Jquery)* côté client. La communication entre serveur et client est assurée par un serveur binaire *BinaryJS* pour la transmission des flux sonores, et par *socket.io* pour les autres communications.
 
-Côté serveur, la **segmentation** de l'enregistrement sonore est mise en oeuvre par un **programme Python** lancé depuis le code Node.
+Côté serveur, la *segmentation* de l'enregistrement sonore est mise en oeuvre par un *programme Python* lancé depuis le code Node.
 
 Enfin, la gestion des lumières est assurée par un code Arduino, lancé à part.
 
 #### Technologies utilisées
-lasondia a été développée sous **linux ubuntu 16.04** pour l'ordinateur et **Androïd** pour la tablette. Elle n'a été conçue que pour fonctionner avec le navigateur **Mozilla Firefox**. On a:
+lasondia a été développée sous *linux ubuntu 16.04* pour l'ordinateur et *Android* pour la tablette. Elle n'a été conçue que pour fonctionner avec le navigateur **Mozilla Firefox**. On a:
 
-- *Enregistrement du cours*: **Audio Stream** pour la communication du flux musical au serveur (https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js); **p5.js** pour le rendu visuel en direct(https://p5js.org/).
-- *Segmentation du cours*: **Python 3.6.5** et bibliothèque **pyAudioAnalysis**
-- *Ecoute et édition du cours*: bibliothèque **Peaks.js** (https://github.com/bbc/peaks.js/tree/master)
-- HTML, CSS, Javascript(Jquery), NodeJS et Processing
+- *Enregistrement du cours*: *Audio Stream* pour la communication du flux musical au serveur (https://github.com/gabrielpoca/browser-pcm-stream/blob/master/public/recorder.js); *p5.js* pour le rendu visuel en direct(https://p5js.org/).
+- *Segmentation du cours*: *Python 3.6.5* et bibliothèque *pyAudioAnalysis*
+- *Ecoute et édition du cours*: bibliothèque *Peaks.js* (https://github.com/bbc/peaks.js/tree/master)
+- *HTML*, *CSS*, *Javascript(Jquery)*, *NodeJS* et *Processing*
 
 #### Organisation du code
 - La gestion des lumières est assurée dans les dossiers *root/BoutonLumière* (interface graphique de contrôle) et *root/arduino/SwitchDMX* (code Arduino pour contrôler les projecteurs).
